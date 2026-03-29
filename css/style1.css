@@ -6960,7 +6960,7 @@ footer {
 /* Brand Identity System — zeleni naslov, zeleni hover */
 .service-featured h3 {
   color: #BAFF29 !important;
-  font-size: 27px !important;
+  font-size: 40px !important;
 }
 
 .service-featured:hover {
@@ -6975,7 +6975,7 @@ footer {
     padding: 38px 28px;
   }
   .service-item:not(.service-featured) h3 {
-    font-size: 20px !important;
+    font-size: 40px !important;
     color: #ffffff !important;
   }
 /* Brand Identity System — zeleni naslov, zeleni hover */
