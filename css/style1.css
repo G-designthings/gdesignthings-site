@@ -6751,19 +6751,66 @@ button:hover {
 
 /* ==================== Custom Styles for Services Section ==================== */
 
+/* ==================== Services Section — Refined ==================== */
+
 .service-item {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid transparent;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
+  padding: 44px 40px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.03);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .service-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
+  border-color: rgba(186, 255, 41, 0.25);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
 }
 
+.service-item .icon {
+  font-size: 36px;
+  color: #BAFF29;
+  margin-bottom: 24px;
+  display: block;
+  opacity: 0.85;
+}
+
+.service-item h3 {
+  font-size: 26px !important;
+  font-weight: 600 !important;
+  color: #BAFF29 !important;
+  margin-bottom: 16px !important;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.service-item p {
+  font-size: 14.5px !important;
+  color: #b8b8b8 !important;
+  line-height: 1.75 !important;
+  font-weight: 300;
+}
+
+/* Featured card — Brand Identity System */
+.service-featured {
+  border-color: rgba(186, 255, 41, 0.18);
+  background-color: rgba(186, 255, 41, 0.04);
+}
+
+.service-featured:hover {
+  border-color: rgba(186, 255, 41, 0.45);
+  box-shadow: 0 14px 50px rgba(186, 255, 41, 0.08);
+}
+
+.service-featured h3 {
+  font-size: 28px !important;
+}
+
+@media (max-width: 768px) {
+  .service-item {
+    padding: 36px 28px;
+  }
+}
 .btn-curve {
     background-color: none;
     color: white;
