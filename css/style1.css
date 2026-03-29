@@ -6978,8 +6978,8 @@ footer {
     font-size: 20px !important;
     color: #ffffff !important;
   }
-  .service-featured h3 {
-    font-size: 40px !important;
-    color: #BAFF29 !important;
-  }
+/* Brand Identity System — zeleni naslov, zeleni hover */
+.service-featured h3 {
+  color: #BAFF29 !important;
+  font-size: 40px !important;
 }
