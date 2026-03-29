@@ -6952,6 +6952,7 @@ footer {
 }
 
 .service-item:not(.service-featured):hover {
+  transform: translateY(-4px);
   border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 12px 36px rgba(255, 255, 255, 0.04);
 }
@@ -6959,11 +6960,26 @@ footer {
 /* Brand Identity System — zeleni naslov, zeleni hover */
 .service-featured h3 {
   color: #BAFF29 !important;
+  font-size: 27px !important;
 }
 
 .service-featured:hover {
-  transform: translateY(-5px);
-  border-color: rgba(186, 255, 41, 0.4);
-  box-shadow: 0 12px 40px rgba(186, 255, 41, 0.08);
+  transform: translateY(-5px) !important;
+  border-color: rgba(186, 255, 41, 0.42) !important;
+  box-shadow: 0 18px 56px rgba(186, 255, 41, 0.09) !important;
 }
 
+/* Mobile */
+@media (max-width: 768px) {
+  .service-item {
+    padding: 38px 28px;
+  }
+  .service-item:not(.service-featured) h3 {
+    font-size: 20px !important;
+    color: #ffffff !important;
+  }
+  .service-featured h3 {
+    font-size: 22px !important;
+    color: #BAFF29 !important;
+  }
+}
