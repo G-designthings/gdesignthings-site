@@ -6996,3 +6996,14 @@ footer {
     background-position: top center;
   }
 }
+
+/* Services — mobile font fix */
+@media (max-width: 768px) {
+  .service-item h3 {
+    font-size: 22px !important;
+  }
+
+  .service-featured h3 {
+    font-size: 24px !important;
+  }
+}
