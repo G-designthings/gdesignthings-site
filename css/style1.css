@@ -6746,26 +6746,10 @@ button:hover {
   }
 }
 
-/* ==================== Custom Styles for Services Section ==================== */
-
-
-/* ==================== Custom Styles for Services Section ==================== */
-
 /* ==================== Services Section — Refined ==================== */
-
 .service-item {
   padding: 44px 40px;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 12px;
-  background-color: rgba(255, 255, 255, 0.03);
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.service-item:hover {
-  transform: translateY(-4px);
-  border-color: rgba(186, 255, 41, 0.25);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
-}
+  ...
 
 .service-item .icon {
   font-size: 36px;
