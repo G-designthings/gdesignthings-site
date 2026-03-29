@@ -6747,76 +6747,90 @@ button:hover {
 }
 
 /* ==================== Services Section — Refined ==================== */
+
 .service-item {
-  padding: 44px 40px;
-  ...
+  padding: 48px 42px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.02);
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  position: relative;
+}
+
+.service-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(186, 255, 41, 0.2);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
+}
 
 .service-item .icon {
-  font-size: 36px;
+  font-size: 34px;
   color: #BAFF29;
-  margin-bottom: 24px;
+  opacity: 0.7;
+  margin-bottom: 28px;
   display: block;
-  opacity: 0.85;
 }
 
 .service-item h3 {
-  font-size: 26px !important;
+  font-size: 24px !important;
   font-weight: 600 !important;
   color: #BAFF29 !important;
-  margin-bottom: 16px !important;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.2px;
   line-height: 1.2;
+  margin-bottom: 16px !important;
 }
 
 .service-item p {
-  font-size: 14.5px !important;
-  color: #b8b8b8 !important;
-  line-height: 1.75 !important;
+  font-size: 14px !important;
+  color: #909090 !important;
+  line-height: 1.8 !important;
   font-weight: 300;
 }
 
-/* Featured card — Brand Identity System */
 .service-featured {
   border-color: rgba(186, 255, 41, 0.18);
-  background-color: rgba(186, 255, 41, 0.04);
+  background-color: rgba(186, 255, 41, 0.038);
+  box-shadow: 0 0 48px rgba(186, 255, 41, 0.045);
 }
 
 .service-featured:hover {
-  border-color: rgba(186, 255, 41, 0.45);
-  box-shadow: 0 14px 50px rgba(186, 255, 41, 0.08);
+  transform: translateY(-5px);
+  border-color: rgba(186, 255, 41, 0.42);
+  box-shadow: 0 18px 56px rgba(186, 255, 41, 0.09);
+}
+
+.service-featured .icon {
+  opacity: 1;
 }
 
 .service-featured h3 {
-  font-size: 28px !important;
+  font-size: 27px !important;
 }
 
-@media (max-width: 768px) {
-  .service-item {
-    padding: 36px 28px;
-  }
+.service-featured p {
+  color: #b0b0b0 !important;
 }
+
 .btn-curve {
-    background-color: none;
-    color: white;
-    border-radius: 30px;
-    padding: 10px 20px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
+  background-color: transparent;
+  color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
 .btn-curve:hover {
-    background-color: #A1D823;
+  background-color: #A1D823;
 }
-
-/* ==================== Custom Styles for Services Section ==================== */
 
 /* Dodaj stilove za footer */
 footer {
-    width: 100%;
-    position: relative;
-    background-color: #151921;
-    padding: 20px 0;
-    box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  background-color: #151921;
+  padding: 20px 0;
+  box-sizing: border-box;
 }
 
 /* ========== Portfolio Grid Fix ========== */
@@ -6830,7 +6844,6 @@ footer {
   border-radius: 8px;
 }
 
-/* Grid fallback za mobilne uređaje */
 @media (max-width: 768px) {
   .gallery.full-width.row .col-md-4 {
     width: 100% !important;
@@ -6838,13 +6851,13 @@ footer {
     padding-left: 15px;
     padding-right: 15px;
   }
-
   .gallery.full-width.row {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 }
+
 .contact-section {
   padding: 80px 0;
   text-align: center;
@@ -6930,19 +6943,7 @@ footer {
   font-size: 16px;
   cursor: pointer;
 }
-@media (max-width: 768px) {
-  .mobile-screen {
-    height: 75vh;
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
-}
-@media (max-width: 768px) {
-  .mobile-screen {
-    justify-content: flex-start;
-    padding-top: 60px;
-  }
-}
+
 /* ================= Mobile Hero Improvements ================ */
 
 @media (max-width: 768px) {
@@ -6955,39 +6956,32 @@ footer {
     flex-direction: column;
     justify-content: flex-start;
   }
-
   .mobile-screen .name {
     font-size: 54px;
     line-height: 1.05;
     letter-spacing: -1px;
     margin-bottom: 10px;
   }
-
   .mobile-screen .slogan {
     font-size: 16px;
     margin-top: 10px;
     margin-bottom: 25px;
     line-height: 1.4;
   }
-
   .mobile-screen .lets {
     margin-top: 10px;
   }
-}
-@media (max-width: 768px) {
   header.freelancer {
     background-size: 120%;
     background-position: top center;
   }
-}
-
-/* Services — mobile font fix */
-@media (max-width: 768px) {
-  .service-item h3 {
-    font-size: 22px !important;
+  .service-item {
+    padding: 38px 28px;
   }
-
+  .service-item h3 {
+    font-size: 20px !important;
+  }
   .service-featured h3 {
-    font-size: 24px !important;
+    font-size: 22px !important;
   }
 }
