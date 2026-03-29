@@ -81,6 +81,60 @@
       .social-icon .icon { width: 20px; height: 45px; line-height: 20px; font-size: 20px; }
       .mobile-screen { justify-content: center; }
     }
+
+    /* Clickable featured card wrapper */
+    .service-card-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      height: 100%;
+    }
+    .service-card-link:hover,
+    .service-card-link:focus {
+      text-decoration: none;
+      color: inherit;
+    }
+    .service-card-link:hover .service-item.service-featured {
+      transform: scale(1.01) translateY(-5px);
+      border-color: rgba(186, 255, 41, 0.55) !important;
+      box-shadow: 0 22px 64px rgba(186, 255, 41, 0.13) !important;
+    }
+
+    /* "See full brand system" CTA inside card */
+    .card-cta {
+      display: block;
+      margin-top: 22px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #BAFF29;
+      letter-spacing: 0.4px;
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+    .service-card-link:hover .card-cta {
+      opacity: 1;
+    }
+
+    /* Start a Project button */
+    .btn-start-project {
+      display: inline-block;
+      border: 1px solid #BAFF29;
+      color: #BAFF29;
+      border-radius: 30px;
+      padding: 11px 32px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .btn-start-project:hover {
+      background-color: #BAFF29;
+      color: #0c0f16;
+      text-decoration: none;
+    }
   </style>
 
 </head>
@@ -184,6 +238,7 @@
     </div>
   </div>
 
+  <!-- ==================== SERVICES ==================== -->
   <section class="services" id="services">
     <div class="container">
 
@@ -194,6 +249,7 @@
 
       <div class="row justify-content-center" style="margin-top: 50px;">
 
+        <!-- Standalone Logo — static card -->
         <div class="col-lg-5 col-md-6">
           <div class="item md-mb50 wow fadeInUp service-item" data-wow-delay=".3s">
             <span class="icon pe-7s-vector"></span>
@@ -202,31 +258,38 @@
           </div>
         </div>
 
+        <!-- Brand Identity System — entire card is a link -->
         <div class="col-lg-5 col-md-6">
-          <div class="item md-mb50 wow fadeInUp service-item service-featured" data-wow-delay=".5s">
-            <span class="icon pe-7s-rocket"></span>
-            <h3>Brand Identity System</h3>
-            <p>A full visual identity — logo suite, color system, typography, and brand guidelines built to last.</p>
-          </div>
+          <a href="https://midi-kryptops-534.notion.site/Brand-Case-Studies-330951ee2cff806a893befcaf2df2ef1"
+             target="_blank"
+             rel="noopener"
+             class="service-card-link">
+            <div class="item md-mb50 wow fadeInUp service-item service-featured" data-wow-delay=".5s">
+              <span class="icon pe-7s-rocket"></span>
+              <h3>Brand Identity System</h3>
+              <p>A full visual identity — logo suite, color system, typography, and brand guidelines built to last.</p>
+              <span class="card-cta">See full brand system →</span>
+            </div>
+          </a>
         </div>
 
       </div>
 
-      <div class="text-center" style="margin-top: 20px; margin-bottom: 50px;">
+      <!-- Bridge sentence -->
+      <div class="text-center" style="margin-top: 20px; margin-bottom: 40px;">
         <p style="color: #ccc; font-size: 15px;">Not sure which fits? Let's talk — I'll help you figure it out.</p>
       </div>
 
-      <div class="text-center" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-        <a href="https://midi-kryptops-534.notion.site/Brand-Case-Studies-330951ee2cff806a893befcaf2df2ef1" target="_blank" rel="noopener" class="btn-curve btn-lit">
-          <span>View Brand Identity Showcase</span>
-        </a>
-        <a href="https://www.gdesignthings.com/contact" class="btn-curve" style="border: 1px solid #BAFF29; color: #BAFF29; border-radius: 30px; padding: 10px 30px; text-decoration: none; display: inline-block; font-size: 14px; letter-spacing: 1px;">
-          <span>Start a Project</span>
+      <!-- Single CTA -->
+      <div class="text-center" style="padding-bottom: 30px;">
+        <a href="https://www.gdesignthings.com/contact" class="btn-start-project">
+          Start a Project
         </a>
       </div>
 
     </div>
   </section>
+  <!-- ==================== END SERVICES ==================== -->
 
   <section class="number-sec section-padding sub-bg" id="numbers">
     <div class="container">
@@ -360,7 +423,7 @@
               </div></div></div>
             </div>
             <div class="item">
-              <p>Thank you, Goran! The logo is lovely and strong. Your service is above & beyond. I've already recommended you!</p>
+              <p>Thank you, Goran! The logo is lovely and strong. Your service is above &amp; beyond. I've already recommended you!</p>
               <div class="info"><div class="cont"><div class="author">
                 <div class="lxleft"><div class="img"><img src="img/clients/c-6.webp" alt="Shannon Wooten" loading="lazy" /></div></div>
                 <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Shannon Wooten</h6><span class="author-details">Consciousness Coach, Huntersville, North Carolina, UNITED STATES</span></div>
