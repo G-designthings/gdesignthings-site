@@ -6946,27 +6946,7 @@ footer {
 
 /* ==================== Featured Card — Brand Identity System ==================== */
 
-/* Standalone Logo title — bijeli */
-.service-item h3 {
-  color: #ffffff !important;
-}
-
-/* Brand Identity System title — accent */
-.service-featured h3 {
-  color: #BAFF29 !important;
-}
-
-/* Featured hover — suptilan glow i lift */
-.service-featured {
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.service-featured:hover {
-  transform: translateY(-5px);
-  border-color: rgba(186, 255, 41, 0.4);
-  box-shadow: 0 12px 40px rgba(186, 255, 41, 0.08);
-}
-/* Standalone Logo — bijeli naslov i hover */
+/* Standalone Logo — bijeli naslov, bijeli hover */
 .service-item:not(.service-featured) h3 {
   color: #ffffff !important;
 }
@@ -6974,4 +6954,61 @@ footer {
 .service-item:not(.service-featured):hover {
   border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 12px 36px rgba(255, 255, 255, 0.04);
+}
+
+/* Brand Identity System — zeleni naslov, zeleni hover */
+.service-featured h3 {
+  color: #BAFF29 !important;
+}
+
+.service-featured:hover {
+  transform: translateY(-5px);
+  border-color: rgba(186, 255, 41, 0.4);
+  box-shadow: 0 12px 40px rgba(186, 255, 41, 0.08);
+}
+
+/* ================= Mobile ================ */
+@media (max-width: 768px) {
+  .mobile-screen {
+    height: auto;
+    min-height: 75vh;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .mobile-screen .name {
+    font-size: 54px;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+  }
+  .mobile-screen .slogan {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    line-height: 1.4;
+  }
+  .mobile-screen .lets {
+    margin-top: 10px;
+  }
+  header.freelancer {
+    background-size: 120%;
+    background-position: top center;
+  }
+  .service-item {
+    padding: 38px 28px;
+  }
+  .service-item h3 {
+    font-size: 20px !important;
+  }
+  .service-featured h3 {
+    font-size: 22px !important;
+    color: #BAFF29 !important;
+  }
+  .service-item:not(.service-featured) h3 {
+    font-size: 20px !important;
+    color: #ffffff !important;
+  }
 }
