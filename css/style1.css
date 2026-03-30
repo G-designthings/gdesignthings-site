@@ -6988,3 +6988,14 @@ footer {
   color: #BAFF29 !important;
   font-size: 40px !important;
 }
+@media screen and (max-width: 767px) {
+  .sec-head h3 {
+    font-size: 55px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .sec-head h3 {
+    font-size: 42px;
+  }
+}
