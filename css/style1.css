@@ -6983,11 +6983,6 @@ footer {
     color: #BAFF29 !important;
   }
 }
-/* Brand Identity System — zeleni naslov, zeleni hover */
-.service-featured h3 {
-  color: #BAFF29 !important;
-  font-size: 40px !important;
-}
 @media screen and (max-width: 767px) {
   .sec-head h3 {
     font-size: 55px;
