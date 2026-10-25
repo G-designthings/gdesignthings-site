@@ -227,6 +227,17 @@
       .sec-head p.eyebrow, p.eyebrow { color: #baff29; font-weight: 300; font-size: 15px; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 5px; }
       p.author-name { font-size: 14px; line-height: 1.3; }
     @media (max-width: 575.98px) { .mobile-screen .name { font-size: 64px; letter-spacing: 0; line-height: 1.08; } .mobile-screen .name .highlight-light { display: block; font-size: 60px; } }
+    /* mobile menu: bigger tap targets */
+      @media (max-width: 991.98px) {
+        .navbar .navbar-collapse { max-height: calc(100vh - 70px) !important; padding: 6px 0 20px !important; }
+        .navbar .navbar-nav .nav-item { width: 100%; text-align: center; }
+        .navbar .navbar-nav .nav-link { display: block; font-size: 19px; padding: 12px 0 !important; margin: 0 auto !important; }
+        .navbar .navbar-nav > li:last-child { width: 100%; text-align: center; margin-top: 10px; }
+        .navbar .btn-curve.btn-lit { padding: 14px 40px !important; margin: 0 !important; }
+        .navbar .btn-curve.btn-lit span { font-size: 16px !important; }
+        .navbar-toggler { padding: 10px 12px; }
+        .navbar-toggler .icon-bar i { font-size: 26px; }
+      }
     </style>
 
 </head>
