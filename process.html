@@ -88,6 +88,13 @@
         padding: 5px 12px;
         border-radius: 100px;
       }
+      .faq details { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+      .faq details:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+      .faq summary { cursor: pointer; list-style: none; padding: 20px 36px 20px 0; font-size: 17px; font-weight: 500; color: #ffffff; position: relative; }
+      .faq summary::-webkit-details-marker { display: none; }
+      .faq summary::after { content: "+"; position: absolute; right: 4px; top: 16px; font-size: 22px; font-weight: 300; color: #BAFF29; transition: transform 0.2s ease; }
+      .faq details[open] summary::after { transform: rotate(45deg); }
+      .faq p { font-size: 14.5px; line-height: 1.7; color: #ccc; margin: 0; padding: 0 36px 22px 0; }
       .process-step .step-pay {
         display: block;
         margin-top: 14px;
@@ -271,6 +278,41 @@
                   </div>
                   <p style="margin-top: 14px; font-size: 13px; color: #909090;">PayPal, Wise, bank transfer or PayID. Full ownership of the final logo passes to you once paid in full.</p>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 70px;">
+            <div class="col-lg-10 offset-lg-1">
+              <div class="sec-head text-center" style="margin-bottom: 30px;">
+                <h6 class="fadeIn">Good to know</h6>
+                <h3 class="wow" style="font-weight: 300; text-shadow: none" data-splitting>Questions</h3>
+              </div>
+              <div class="faq">
+                <details>
+                  <summary>How long does a project take?</summary>
+                  <p>First pencil sketches arrive 4 to 7 days after the deposit. A logo usually takes 2 to 3 weeks from start to final files, a full brand identity 4 to 6 weeks. The pace depends mostly on how fast we decide together.</p>
+                </details>
+                <details>
+                  <summary>How does payment work?</summary>
+                  <p>Two payments. 50% books your spot and covers the sketch phase. The remaining 50% is due when you choose your direction, before digital development begins. Final files follow your approval, with nothing more to pay. PayPal, Wise, bank transfer or PayID.</p>
+                </details>
+                <details>
+                  <summary>What if none of the sketches feel right?</summary>
+                  <p>That is what the sketch phase is for. We talk about what is missing and I draw another round. If we still cannot find it, you stop there. The deposit covers the sketches and you owe nothing more.</p>
+                </details>
+                <details>
+                  <summary>What do I get at the end?</summary>
+                  <p>Every file you will ever need: AI, EPS, SVG, PDF and PNG, in colour, black and white, with a colour codes sheet. For a brand identity, also the colour palette, typography and guidelines. Full ownership of the final logo once paid in full.</p>
+                </details>
+                <details>
+                  <summary>Do you use templates or AI to make logos?</summary>
+                  <p>No. Every mark starts as a pencil sketch drawn for your business. Nothing is generated and nothing is reused from another client.</p>
+                </details>
+                <details>
+                  <summary>Can we talk before I decide?</summary>
+                  <p>Yes. Write a few lines about your business to ask@gdesignthings.com. I reply within one working day, with questions before prices. If a short call helps, I will send a link.</p>
+                </details>
               </div>
             </div>
           </div>
