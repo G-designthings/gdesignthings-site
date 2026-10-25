@@ -106,6 +106,14 @@
         .navbar-toggler { padding: 10px 12px; }
         .navbar-toggler .icon-bar i { font-size: 26px; }
       }
+    /* mobile menu: opens without jQuery, smooth, no blue tap highlight */
+      .navbar-toggler { -webkit-tap-highlight-color: transparent; }
+      .navbar-toggler:focus, .navbar-toggler:active { outline: none !important; box-shadow: none !important; background: transparent !important; }
+      .navbar-toggler:focus-visible { outline: 1px solid #BAFF29 !important; outline-offset: 2px; }
+      @media (max-width: 991.98px) {
+        .navbar .navbar-collapse.collapse { display: block !important; max-height: 0 !important; opacity: 0; overflow: hidden !important; padding-top: 0 !important; padding-bottom: 0 !important; transition: max-height .3s ease, opacity .2s ease, padding .3s ease; }
+        .navbar .navbar-collapse.collapse.show { max-height: calc(100vh - 70px) !important; opacity: 1; overflow-y: auto !important; padding-top: 6px !important; padding-bottom: 20px !important; }
+      }
     </style>
   </head>
 
@@ -282,6 +290,21 @@
     </footer>
 
     <script>
+    /* Mobile menu works at once, before jQuery and Bootstrap load. */
+    (function () {
+      var btn = document.querySelector(".navbar-toggler"), menu = document.getElementById("navbarSupportedContent");
+      if (!btn || !menu) return;
+      btn.removeAttribute("data-toggle");
+      btn.addEventListener("click", function () {
+        var open = menu.classList.toggle("show");
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      menu.addEventListener("click", function (e) {
+        if (e.target.closest("a")) { menu.classList.remove("show"); btn.setAttribute("aria-expanded", "false"); }
+      });
+    })();
+  </script>
+  <script>
     /* Site JS (jQuery + plugins) loads on first interaction, or 6s after page load, so the first paint is not blocked. */
     (function (w, d) {
       var done = false, files = ["js/jquery-3.0.0.min.js", "js/jquery-migrate-3.0.0.min.js", "js/plugins.js", "js/scripts.js"];
