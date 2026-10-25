@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="keywords" content="logo design, branding, visual identity, graphic design, brand process, packaging, brand assets" />
     <meta name="description" content="How a G.designthings project moves from first message to finished brand: Brief, Sketch, Digital, Delivery." />
     <meta name="author" content="Goran Jugovic" />
@@ -81,6 +81,24 @@
         padding: 5px 12px;
         border-radius: 100px;
       }
+      .process-step .step-pay {
+        display: block;
+        margin-top: 14px;
+        font-size: 12.5px;
+        line-height: 1.5;
+        color: #BAFF29;
+        font-weight: 500;
+      }
+      .process-callout + .process-callout { margin-top: 20px; }
+      .process-callout .pay-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px 32px;
+        margin-top: 14px;
+      }
+      .process-callout .pay-grid b { display: block; color: #ffffff; font-weight: 500; margin-bottom: 4px; }
+      .process-callout .pay-grid p { font-size: 14px; color: #ccc; margin: 0; line-height: 1.6; }
+      @media (max-width: 767px) { .process-callout .pay-grid { grid-template-columns: 1fr; } }
       .process-callout {
         background-color: #1c1f26;
         border: 1px solid #BAFF29;
@@ -198,6 +216,7 @@
                 <span class="icon pe-7s-note2"></span>
                 <h3>Brief</h3>
                 <p>We talk about your business, your audience, what you like and don't like, and what the brand needs to do for you.</p>
+                <span class="step-pay">50% deposit books your spot</span>
               </div>
             </div>
 
@@ -217,6 +236,7 @@
                 <span class="icon pe-7s-diamond"></span>
                 <h3>Digital</h3>
                 <p>The approved sketch is rebuilt clean in vector. I refine it, apply it across mockups and show how it scales from a favicon to a billboard.</p>
+                <span class="step-pay">Remaining 50% when you choose your direction</span>
               </div>
             </div>
 
@@ -226,6 +246,7 @@
                 <span class="icon pe-7s-gift"></span>
                 <h3>Delivery</h3>
                 <p>You receive every file format you'll ever need, in one organized folder: source files, print and web versions, all signed off and ready to use.</p>
+                <span class="step-pay">Nothing more to pay</span>
               </div>
             </div>
           </div>
@@ -240,6 +261,18 @@
                     A logo is easy to redraw on paper and expensive to redraw on screen. That's why we lock the direction by hand before anything goes digital.
                     You see the idea early, we adjust it in minutes, and the digital phase only has to make a decision you've already approved look great.
                   </p>
+                </div>
+              </div>
+              <div class="process-callout wow fadeInUp" data-wow-delay=".3s">
+                <span class="icon pe-7s-wallet"></span>
+                <div>
+                  <h4>How payment works</h4>
+                  <p>Two payments, no surprises at the end. The same for a single logo and a full brand identity.</p>
+                  <div class="pay-grid">
+                    <div><b>50% to start</b><p>Books your spot and covers the sketch phase. Sketching begins once the deposit lands.</p></div>
+                    <div><b>50% when you choose your direction</b><p>Due before digital development begins. Final files follow your approval, with nothing more to pay.</p></div>
+                  </div>
+                  <p style="margin-top: 14px; font-size: 13px; color: #909090;">PayPal, Wise, bank transfer or PayID. Full ownership of the final logo passes to you once paid in full.</p>
                 </div>
               </div>
             </div>
