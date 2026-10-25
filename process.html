@@ -15,7 +15,7 @@
 
     <!-- Google Tag Manager -->
     <script>
-    /* GTM loads on first interaction or after 3s, whichever comes first, so tracking never delays the first paint. */
+    /* GTM loads on first interaction, or 7s after page load if the visitor does nothing, so tracking never delays the first paint. */
     (function (w, d, l, i) {
       w[l] = w[l] || [];
       var done = false;
@@ -28,7 +28,8 @@
         ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.removeEventListener(e, load, { passive: true }); });
       }
       ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.addEventListener(e, load, { passive: true, once: true }); });
-      w.setTimeout(load, 3000);
+      function later(ms) { if (d.readyState === "complete") w.setTimeout(load, ms); else w.addEventListener("load", function () { w.setTimeout(load, ms); }); }
+      later(7000);
     })(window, document, "dataLayer", "GTM-KMDWJNP");
   </script>
 
@@ -412,7 +413,7 @@
     </footer>
 
     <script>
-    /* Site JS (jQuery + plugins) loads on first interaction or after 2.5s so the first paint is not blocked. */
+    /* Site JS (jQuery + plugins) loads on first interaction, or 6s after page load, so the first paint is not blocked. */
     (function (w, d) {
       var done = false, files = ["js/jquery-3.0.0.min.js", "js/jquery-migrate-3.0.0.min.js", "js/plugins.js", "js/scripts.js"];
       function next(i) {
@@ -434,7 +435,8 @@
         next(0);
       }
       ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.addEventListener(e, load, { passive: true }); });
-      w.setTimeout(load, 2500);
+      function later(ms) { if (d.readyState === "complete") w.setTimeout(load, ms); else w.addEventListener("load", function () { w.setTimeout(load, ms); }); }
+      later(6000);
     })(window, document);
   </script>
   </body>
