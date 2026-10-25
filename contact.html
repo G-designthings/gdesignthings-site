@@ -45,7 +45,6 @@
   <link rel="stylesheet" href="css/plugins/slick.css" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="css/plugins/slick-theme.css" media="print" onload="this.media='all'" />
     <link rel="stylesheet" href="css/style1.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
 
     <style>
       .email-box input[type="text"],
@@ -281,11 +280,32 @@
       </div>
     </footer>
 
-    <script src="js/jquery-3.0.0.min.js" defer></script>
-    <script src="js/jquery-migrate-3.0.0.min.js" defer></script>
-    <script src="js/plugins.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr" defer></script>
-    <script src="js/scripts.js" defer></script>
+    <script>
+    /* Site JS (jQuery + plugins) loads on first interaction or after 2.5s so the first paint is not blocked. */
+    (function (w, d) {
+      var done = false, files = ["js/jquery-3.0.0.min.js", "js/jquery-migrate-3.0.0.min.js", "js/plugins.js", "js/scripts.js"];
+      function next(i) {
+        if (i >= files.length) { d.dispatchEvent(new Event("sitejs:ready")); return; }
+        if (files[i] === "js/scripts.js" && d.readyState === "complete" && w.jQuery) {
+          /* page already loaded: make scripts.js's $(window).on("load") handlers run right away */
+          var on = w.jQuery.fn.on;
+          w.jQuery.fn.on = function (ev, fn) {
+            var r = on.apply(this, arguments);
+            if (this[0] === w && ev === "load" && typeof fn === "function") { fn.call(w); }
+            return r;
+          };
+        }
+        var s = d.createElement("script"); s.src = files[i]; s.onload = function () { next(i + 1); }; d.body.appendChild(s);
+      }
+      function load() {
+        if (done) return; done = true;
+        ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.removeEventListener(e, load); });
+        next(0);
+      }
+      ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.addEventListener(e, load, { passive: true }); });
+      w.setTimeout(load, 2500);
+    })(window, document);
+  </script>
 
     <script>
       const form = document.getElementById('contactForm');
