@@ -84,6 +84,7 @@
       .btn-curve.btn-lit span { font-size: 17px !important; font-weight: 500 !important; text-transform: uppercase !important; letter-spacing: 2px !important; }
       .navbar .btn-curve.btn-lit { padding: 6px 18px !important; margin-left: 10px !important; line-height: 1.6 !important; }
       .navbar .btn-curve.btn-lit span { font-size: 13px !important; letter-spacing: 1px !important; }
+    @media (max-width: 767px) { .works-header { min-height: 0; padding: 60px 0 20px; } .works-header .capt.mt-50 { margin-top: 0; } .works-header .capt h2 span { text-transform: none !important; } }
     </style>
   </head>
 
@@ -118,11 +119,11 @@
           <div class="col-lg-9 col-md-11 static">
             <div class="capt mt-50">
               <div class="parlx">
-                <h2 class="custom-font-wrong" style="font-weight: 500; font-size: 90px; text-shadow: none; letter-spacing: -2px; margin-bottom: 5px;">
-                  Share Your <span style="color: #BAFF29; font-size: 90px; margin-left: 5px;">Vision.</span>
+                <h2 class="custom-font-wrong" style="font-weight: 500; font-size: clamp(36px, 9vw, 56px); text-transform: none; text-shadow: none; letter-spacing: -1px; margin-bottom: 5px; line-height: 1.2;">
+                  Share your<br /><span style="display: block; font-size: clamp(48px, 15vw, 88px); color: #BAFF29; font-weight: 600; margin-top: 8px;">vision.</span>
                 </h2>
-                <p style="margin-top: 20px;">
-                  Let's shape your brand together and elevate your business. Share your vision below, and I'll get in touch soon to discuss how we can bring it to life.
+                <p style="margin-top: 20px; max-width: 640px;">
+                  Tell me about your business. The rest starts from there.
                 </p>
               </div>
             </div>
@@ -138,9 +139,6 @@
             <div class="col-lg-6">
               <div class="form md-mb50">
                 <h4 class="extra-title mb-50" style="font-size: 110%;">Help Me Understand Your Business</h4>
-                <p style="font-size: 105%; color: #BAFF29; margin-bottom: 20px;">
-                  Drop me a message, and I'll respond via email soon!
-                </p>
 
                 <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
                   <input type="hidden" name="access_key" value="520a1702-bd16-4d15-a194-26b03e083c60" />
