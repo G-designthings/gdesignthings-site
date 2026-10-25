@@ -108,7 +108,9 @@
       }
     /* mobile menu: opens without jQuery, smooth, no blue tap highlight */
       .navbar-toggler { -webkit-tap-highlight-color: transparent; }
-      .navbar-toggler:focus, .navbar-toggler:active { outline: none !important; box-shadow: none !important; background: transparent !important; }
+      .navbar-toggler, .navbar-toggler:hover, .navbar-toggler:focus, .navbar-toggler:active { outline: none !important; box-shadow: none !important; background: transparent !important; border-color: transparent !important; }
+      .navbar-toggler .icon-bar, .navbar-toggler .icon-bar i { color: #ffffff !important; transition: color .2s ease; }
+      .navbar-toggler[aria-expanded="true"] .icon-bar, .navbar-toggler[aria-expanded="true"] .icon-bar i { color: #BAFF29 !important; }
       .navbar-toggler:focus-visible { outline: 1px solid #BAFF29 !important; outline-offset: 2px; }
       @media (max-width: 991.98px) {
         .navbar .navbar-collapse.collapse { display: block !important; max-height: 0 !important; opacity: 0; overflow: hidden !important; padding-top: 0 !important; padding-bottom: 0 !important; transition: max-height .3s ease, opacity .2s ease, padding .3s ease; }
