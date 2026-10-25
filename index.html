@@ -101,6 +101,31 @@
       box-shadow: 0 22px 64px rgba(186, 255, 41, 0.13) !important;
     }
 
+    /* Package contents */
+    .service-list {
+      list-style: none;
+      margin: 26px 0 0;
+      padding: 22px 0 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: left;
+    }
+    .service-list li {
+      position: relative;
+      padding: 7px 0 7px 20px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #c9c9c9;
+      font-weight: 300;
+    }
+    .service-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 16px;
+      width: 9px;
+      height: 2px;
+      background: #BAFF29;
+    }
     /* "See full brand system" CTA inside card */
     .card-cta {
       display: block;
@@ -287,6 +312,14 @@
             <span class="icon pe-7s-vector"></span>
             <h3>Standalone Logo</h3>
             <p>A clean, professional logo built around your brand's core idea. Hand-crafted, no templates.</p>
+            <ul class="service-list">
+              <li>Short brief to lock in style, feel and priorities</li>
+              <li>Original hand sketches in several directions</li>
+              <li>Chosen direction built digital, refined together</li>
+              <li>Primary logo plus colour, black and white versions</li>
+              <li>All source files: AI, EPS, SVG, PDF, PNG</li>
+              <li>Colour codes sheet and full ownership of the logo</li>
+            </ul>
           </div>
         </div>
 
@@ -300,7 +333,15 @@
               <span class="icon pe-7s-rocket"></span>
               <h3>Brand Identity System</h3>
               <p>A full visual identity — logo suite, color system, typography, and brand guidelines built to last.</p>
-              <span class="card-cta">See full brand system →</span>
+              <ul class="service-list">
+                <li>Everything in Standalone Logo</li>
+                <li>Logo system: primary, secondary, icon and lockups</li>
+                <li>Colour palette and typography system</li>
+                <li>Brand guidelines, from a short usage guide to a full brand book</li>
+                <li>Patterns, templates and mockups as the brand needs</li>
+                <li>Files organised for print, web and social</li>
+              </ul>
+              <span class="card-cta">See 22 brand case studies →</span>
             </div>
           </a>
         </div>
@@ -309,7 +350,8 @@
 
       <!-- Bridge sentence -->
       <div class="text-center" style="margin-top: 20px; margin-bottom: 40px;">
-        <p style="color: #ccc; font-size: 15px;">Not sure which fits? Let's talk — I'll help you figure it out.</p>
+        <p style="color: #ccc; font-size: 15px;">Half to start, half when you choose your direction. Final files follow your approval, nothing more to pay.</p>
+        <p style="color: #909090; font-size: 14px; margin-top: 8px;">Not sure which fits? Let's talk — I'll help you figure it out.</p>
       </div>
 
       <!-- Single CTA -->
@@ -368,14 +410,17 @@
         </div>
       </div>
       <div class="text-center mt-40">
-        <a href="https://www.instagram.com/g.designthings/" target="_blank" class="butn butn-md butn-bord radius-30">
-          <span>See more on Instagram</span>
+        <a href="https://midi-kryptops-534.notion.site/Brand-Case-Studies-330951ee2cff806a893befcaf2df2ef1" target="_blank" rel="noopener" class="butn butn-md butn-bord radius-30" style="margin: 6px;">
+          <span>See 22 brand case studies</span>
+        </a>
+        <a href="https://www.instagram.com/g.designthings/" target="_blank" rel="noopener" class="butn butn-md butn-bord radius-30" style="margin: 6px;">
+          <span>More on Instagram</span>
         </a>
       </div>
     </div>
   </section>
 
-  <section class="testimonials section-padding sub-bg lftstl bg-img parallaxie" data-background="img/slid/3.jpg" data-overlay-dark="9" id="testimonials">
+  <section class="testimonials section-padding sub-bg lftstl" id="testimonials">
     <div class="container position-re">
       <div class="sec-head text-center">
         <h6 class="wow fadeIn" data-wow-delay=".5s">What People Say</h6>
@@ -518,7 +563,7 @@
     </div>
   </section>
 
-  <section class="call-action section-padding bg-img" data-background="img/pattern.png" id="contact">
+  <section class="call-action section-padding sub-bg" id="contact">
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-lg-9">
