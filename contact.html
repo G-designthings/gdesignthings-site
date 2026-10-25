@@ -14,17 +14,22 @@
 
     <!-- Google Tag Manager -->
     <script>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
+    /* GTM loads on first interaction or after 3s, whichever comes first, so tracking never delays the first paint. */
+    (function (w, d, l, i) {
+      w[l] = w[l] || [];
+      var done = false;
+      function load() {
+        if (done) return; done = true;
         w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-KMDWJNP");
-    </script>
+        var j = d.createElement("script"); j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i;
+        d.head.appendChild(j);
+        ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.removeEventListener(e, load, { passive: true }); });
+      }
+      ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.addEventListener(e, load, { passive: true, once: true }); });
+      w.setTimeout(load, 3000);
+    })(window, document, "dataLayer", "GTM-KMDWJNP");
+  </script>
 
     <title>G.designthings</title>
     <link rel="shortcut icon" href="img/favicon.ico" />
