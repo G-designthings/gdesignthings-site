@@ -49,7 +49,6 @@
 /* ====================== [ Start Typography  ] ====================== */
 
 /* Import Poppins font from Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
 
 /* Use Poppins font for body text */
 * {
@@ -6548,8 +6547,6 @@ button:hover {
   margin-bottom: 10px;
   letter-spacing: 3px;
   text-shadow: none;
-}
-
 }
 
 .looking {
