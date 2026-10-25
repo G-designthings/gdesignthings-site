@@ -62,7 +62,9 @@
   <link rel="shortcut icon" href="img/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media=\'all\'" />
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" /></noscript>
   <link rel="stylesheet" href="css/plugins/bootstrap.min.css" />
   <link rel="stylesheet" href="css/plugins/animate.css" media="print" onload="this.media='all'" />
   <link rel="stylesheet" href="css/plugins/pe-icon-7-stroke.css" media="print" onload="this.media='all'" />
@@ -216,6 +218,9 @@
       .btn-curve.btn-lit span { font-size: 17px !important; font-weight: 500 !important; text-transform: uppercase !important; letter-spacing: 2px !important; }
       .navbar .btn-curve.btn-lit { padding: 6px 18px !important; margin-left: 10px !important; line-height: 1.6 !important; }
       .navbar .btn-curve.btn-lit span { font-size: 13px !important; letter-spacing: 1px !important; }
+    /* eyebrow labels (were h6) */
+      .sec-head p.eyebrow, p.eyebrow { color: #baff29; font-weight: 300; font-size: 15px; text-transform: uppercase; letter-spacing: 5px; margin-bottom: 5px; }
+      p.author-name { font-size: 14px; line-height: 1.3; }
     </style>
 
 </head>
@@ -237,7 +242,7 @@
   <nav class="navbar navbar-expand-lg">
     <div class="container">
       <a class="logo" href="index.html#">
-        <img src="img/logo-light.png" alt="logo" />
+        <img src="img/logo-light.png" alt="g.designthings" width="465" height="80" />
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="icon-bar"><i class="fas fa-bars"></i></span>
@@ -260,6 +265,7 @@
     </div>
   </nav>
 
+  <main>
   <div class="cont cner mobile-screen">
     <div class="name">
       CRAFTING <br />
@@ -271,10 +277,10 @@
       <a href="contact.html" class="btn-curve btn-lit"><span>Start a project</span></a>
     </div>
     <div class="social-icon">
-      <a target="_blank" rel="noopener" href="https://www.instagram.com/g.designthings/?hl=en" class="icon"><i class="fab fa-instagram"></i></a>
-      <a target="_blank" rel="noopener" href="https://dribbble.com/g_designthings" class="icon"><i class="fab fa-dribbble"></i></a>
-      <a target="_blank" rel="noopener" href="https://www.pinterest.com/Gdesignthings/" class="icon"><i class="fab fa-pinterest"></i></a>
-      <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/goran-jugovic-261401a3/" class="icon"><i class="fab fa-linkedin"></i></a>
+      <a target="_blank" rel="noopener" href="https://www.instagram.com/g.designthings/?hl=en" class="icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a target="_blank" rel="noopener" href="https://dribbble.com/g_designthings" class="icon" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+      <a target="_blank" rel="noopener" href="https://www.pinterest.com/Gdesignthings/" class="icon" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+      <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/goran-jugovic-261401a3/" class="icon" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
     </div>
   </div>
 
@@ -288,7 +294,9 @@
             <img
               src="img/goran-about.webp"
               alt="Goran Jugovic — G.DesignThings"
-              loading="lazy"
+              width="720"
+              height="720"
+              fetchpriority="high"
               style="width: 100%; height: auto; display: block; filter: grayscale(100%) contrast(1.05); object-fit: cover;"
             />
             <!-- subtle green bottom accent line -->
@@ -355,7 +363,7 @@
     <div class="container">
 
       <div class="sec-head text-center">
-        <h6 class="wow fadeIn" data-wow-delay=".3s">Logo to Identity</h6>
+        <p class="eyebrow wow fadeIn" data-wow-delay=".3s">Logo to Identity</p>
         <h3 class="wow" style="font-weight: 300; text-shadow: none" data-splitting>Services</h3>
         <p style="color: #ccc; font-size: 16px; margin-top: 10px;">From logos to brand systems.</p>
       </div>
@@ -423,7 +431,7 @@
     <div class="container">
 
       <div class="sec-head text-center">
-        <h6 class="wow fadeIn" data-wow-delay=".3s">The Process</h6>
+        <p class="eyebrow wow fadeIn" data-wow-delay=".3s">The Process</p>
         <h3 class="wow" style="font-weight: 300; text-shadow: none" data-splitting>Process</h3>
         <p style="color: #ccc; font-size: 16px; margin-top: 10px;">Four steps. You always know what comes next.</p>
       </div>
@@ -470,7 +478,7 @@
   <section class="portfolio section-padding pb-70" id="portfolio">
     <div class="container">
       <div class="sec-head">
-        <h6 class="wow fadeIn" data-wow-delay=".5s" style="text-align: center">recent work</h6>
+        <p class="eyebrow wow fadeIn" data-wow-delay=".5s" style="text-align: center">recent work</p>
         <h3 class="wow" style="font-weight: 300; text-shadow: none; text-align: center" data-splitting>PORTFOLIO</h3>
       </div>
     </div>
@@ -525,7 +533,7 @@
   <section class="testimonials section-padding sub-bg lftstl" id="testimonials">
     <div class="container position-re">
       <div class="sec-head text-center">
-        <h6 class="wow fadeIn" data-wow-delay=".5s">What People Say</h6>
+        <p class="eyebrow wow fadeIn" data-wow-delay=".5s">What People Say</p>
         <h3 class="wow" data-splitting style="font-weight: 300; text-shadow: none">testimonials</h3>
       </div>
       <div class="row justify-content-center wow fadeInUp" data-wow-delay=".5s">
@@ -534,85 +542,85 @@
             <div class="item">
               <p>I loved the logo design for Sailing Pig! Fantastic work, Goran!</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-13a.webp" alt="Katie Anne Moy" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Katie Anne Moy</h6><span class="author-details">Actor / Producer, Los Angeles, California, UNITED STATES</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-13a.webp" alt="Katie Anne Moy" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Katie Anne Moy</p><span class="author-details">Actor / Producer, Los Angeles, California, UNITED STATES</span></div>
               </div></div></div>
             </div>
             <div class="item">
               <p>Goran created a stunning logo! We're very satisfied and highly recommend him. Thank you, 1000x!</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-1.webp" alt="Srdjan Radulovic" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Srdjan Radulovic</h6><span class="author-details">Photographer, Thurgau, SWITZERLAND</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-1.webp" alt="Srdjan Radulovic" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Srdjan Radulovic</p><span class="author-details">Photographer, Thurgau, SWITZERLAND</span></div>
               </div></div></div>
             </div>
             <div class="item">
               <p>G.Designthings is the most professional firm I've worked with. Goran brought my vision to life with an eye-catching logo.</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-9aa.webp" alt="Armon Tillman" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Armon Tillman</h6><span class="author-details">Owner, Krabaddicts.com, UNITED STATES</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-9aa.webp" alt="Armon Tillman" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Armon Tillman</p><span class="author-details">Owner, Krabaddicts.com, UNITED STATES</span></div>
               </div></div></div>
             </div>
             <div class="item">
               <p>Goran exceeded my expectations! He crafted a logo that perfectly represents my brand. Highly recommend!</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-14.webp" alt="Omar Rodriguez" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Omar Rodriguez</h6><span class="author-details">Owner / Kowboy Kings Poker, Montclair, California, UNITED STATES</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-14.webp" alt="Omar Rodriguez" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Omar Rodriguez</p><span class="author-details">Owner / Kowboy Kings Poker, Montclair, California, UNITED STATES</span></div>
               </div></div></div>
             </div>
             <div class="item">
               <p>Thanks, Goran! I love what you've created. You nailed it!</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-7.webp" alt="Brad Rohles" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Brad Rohles</h6><span class="author-details">Real Estate Expert, Owner/ The Rohles Group, Minneapolis, Minnesota, UNITED STATES</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-7.webp" alt="Brad Rohles" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Brad Rohles</p><span class="author-details">Real Estate Expert, Owner/ The Rohles Group, Minneapolis, Minnesota, UNITED STATES</span></div>
               </div></div></div>
             </div>
             <div class="item">
               <p>Thank you, Goran! The logo is lovely and strong. Your service is above &amp; beyond. I've already recommended you!</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-6.webp" alt="Shannon Wooten" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Shannon Wooten</h6><span class="author-details">Consciousness Coach, Huntersville, North Carolina, UNITED STATES</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-6.webp" alt="Shannon Wooten" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Shannon Wooten</p><span class="author-details">Consciousness Coach, Huntersville, North Carolina, UNITED STATES</span></div>
               </div></div></div>
             </div>
             <div class="item">
               <p>g.designthings has been my go-to for 3 years. Goran captures our vision perfectly every time. Thank you!</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-2.webp" alt="Beejan Roohian" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Beejan Roohian</h6><span class="author-details">Owner, Sonoma Strength Academy, Santa Rosa CA, UNITED STATES</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-2.webp" alt="Beejan Roohian" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Beejan Roohian</p><span class="author-details">Owner, Sonoma Strength Academy, Santa Rosa CA, UNITED STATES</span></div>
               </div></div></div>
             </div>
             <div class="item">
               <p>Brilliant work! Goran's quality is easily distinguishable from the average designer. I'm proud of my logo!</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-5.webp" alt="Andy Boudreau" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Andy Boudreau</h6><span class="author-details">AB Hockey, Owner/Operator, Alberta, CANADA</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-5.webp" alt="Andy Boudreau" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Andy Boudreau</p><span class="author-details">AB Hockey, Owner/Operator, Alberta, CANADA</span></div>
               </div></div></div>
             </div>
             <div class="item">
               <p>After searching for the right fit, I found Goran! His work is singular and sophisticated. Thank you for your services!</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-3.webp" alt="Leonardo Buraslan" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Leonardo Buraslan</h6><span class="author-details">BRASIL</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-3.webp" alt="Leonardo Buraslan" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Leonardo Buraslan</p><span class="author-details">BRASIL</span></div>
               </div></div></div>
             </div>
             <div class="item">
               <p>Goran, working with you was a pleasure! You're creative and proficient. I'm excited to start using the logo!</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-12.webp" alt="Remy Brar" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Remy Brar</h6><span class="author-details">Research Manager/aspiring artist, Toronto, Ontario, CANADA</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-12.webp" alt="Remy Brar" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Remy Brar</p><span class="author-details">Research Manager/aspiring artist, Toronto, Ontario, CANADA</span></div>
               </div></div></div>
             </div>
             <div class="item">
               <p>Our attention was caught by the logo, and we appreciated the quality and speed of work. We highly recommend Goran!</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-10.webp" alt="Francisco V" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Francisco V</h6><span class="author-details">Owner, Flatland Feasts, El Paso, Texas, UNITED STATES</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-10.webp" alt="Francisco V" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Francisco V</p><span class="author-details">Owner, Flatland Feasts, El Paso, Texas, UNITED STATES</span></div>
               </div></div></div>
             </div>
             <div class="item">
               <p>Goran is a reliable designer! He's met our needs consistently. Thank you for your exceptional work!</p>
               <div class="info"><div class="cont"><div class="author">
-                <div class="lxleft"><div class="img"><img src="img/clients/c-8.webp" alt="Matt Carr" loading="lazy" /></div></div>
-                <div class="fxright"><h6 class="author-name" style="color: #BAFF29;">Matt Carr</h6><span class="author-details">Founder, Goldspun Ventures, Ann Arbor, Michigan, UNITED STATES</span></div>
+                <div class="lxleft"><div class="img"><img src="img/clients/c-8.webp" alt="Matt Carr" loading="lazy" width="160" height="160" /></div></div>
+                <div class="fxright"><p class="author-name" style="color: #BAFF29;">Matt Carr</p><span class="author-details">Founder, Goldspun Ventures, Ann Arbor, Michigan, UNITED STATES</span></div>
               </div></div></div>
             </div>
           </div>
@@ -624,7 +632,7 @@
   <section class="press section-padding sub-bg" id="press">
     <div class="container">
       <div class="sec-head text-center" style="margin-bottom: 30px;">
-        <h6 class="fadeIn">Featured on</h6>
+        <p class="eyebrow fadeIn">Featured on</p>
       </div>
       <div class="press-row">
         <a href="https://theinspirationgrid.com/minimalistic-logos-by-goran-jugovic/" target="_blank" rel="noopener">Inspiration Grid<span>Minimalistic Logos by Goran Jugovic</span></a>
@@ -639,7 +647,7 @@
       <div class="row">
         <div class="col-md-8 col-lg-9">
           <div class="content sm-mb30">
-            <h6 class="wow" data-splitting>Transformation</h6>
+            <p class="eyebrow wow" data-splitting>Transformation</p>
             <h1 class="wow" data-splitting>What's the story behind your brand?</h1>
             <p style="color: white;">Discover how we can bring your unique vision to life.</p>
           </div>
@@ -651,6 +659,8 @@
     </div>
   </section>
 
+  </main>
+
   <footer class="footer-half sub-bg section-padding pb-0">
     <div class="container">
       <div class="row">
@@ -658,7 +668,7 @@
           <div class="cont">
             <div class="logo">
               <a target="_blank" rel="noopener" href="index.html#0">
-                <img src="img/logo-light.png" alt="G.Designthings Logo" loading="lazy" />
+                <img src="img/logo-light.png" alt="G.Designthings Logo" loading="lazy" width="465" height="80" />
               </a>
             </div>
             <div class="con-info">
@@ -686,13 +696,13 @@
         </div>
         <div class="col-lg-5 offset-lg-2">
           <div class="social-icon">
-            <h6 class="stit simple-btn">Follow Me</h6>
+            <p class="eyebrow stit simple-btn">Follow Me</p>
             <div class="social">
-              <a target="_blank" rel="noopener" href="https://www.facebook.com/g.designthings" class="icon"><i class="fab fa-facebook-f"></i></a>
-              <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/goran-jugovic-261401a3/" class="icon"><i class="fab fa-linkedin"></i></a>
-              <a target="_blank" rel="noopener" href="https://dribbble.com/g_designthings" class="icon"><i class="fab fa-dribbble"></i></a>
-              <a target="_blank" rel="noopener" href="https://www.instagram.com/g.designthings/?hl=en" class="icon"><i class="fab fa-instagram"></i></a>
-              <a target="_blank" rel="noopener" href="https://www.pinterest.com/Gdesignthings/" class="icon"><i class="fab fa-pinterest"></i></a>
+              <a target="_blank" rel="noopener" href="https://www.facebook.com/g.designthings" class="icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a target="_blank" rel="noopener" href="https://www.linkedin.com/in/goran-jugovic-261401a3/" class="icon" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+              <a target="_blank" rel="noopener" href="https://dribbble.com/g_designthings" class="icon" aria-label="Dribbble"><i class="fab fa-dribbble"></i></a>
+              <a target="_blank" rel="noopener" href="https://www.instagram.com/g.designthings/?hl=en" class="icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a target="_blank" rel="noopener" href="https://www.pinterest.com/Gdesignthings/" class="icon" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
             </div>
           </div>
         </div>
