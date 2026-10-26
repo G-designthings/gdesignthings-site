@@ -11,7 +11,7 @@
   var THREE = w.THREE;
   var reduced = w.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var isMobile = w.innerWidth < 768;
-  var pixelRatio = Math.min(w.devicePixelRatio || 1, isMobile ? 1.5 : 2);
+  var pixelRatio = Math.min(w.devicePixelRatio || 1, isMobile ? 1 : 2);
 
   /* ---------- works, read from the grid so the two stay in sync ---------- */
   var works = [];
@@ -89,12 +89,12 @@
     scene.add(ring);
 
     var n = works.length;
-    var R = isMobile ? 3.0 : 6.2;
-    var size = isMobile ? 1.25 : 2.4;
+    var R = isMobile ? 4.6 : 6.2;
+    var size = isMobile ? 2.2 : 2.4;
     /* desktop: the whole ring sits behind the title plane, so the text always reads first */
-    ring.position.z = isMobile ? 0 : -1.5;
+    ring.position.z = -1.5;
     /* on phones the ring sits below the social icons instead of behind the title */
-    ring.position.y = isMobile ? -4.3 : 0;
+    ring.position.y = 0;
 
     var manager = new THREE.LoadingManager();
     manager.onLoad = function () { host.classList.add("hero-3d-ready"); };
@@ -114,15 +114,15 @@
       var wdt = host.clientWidth, hgt = host.clientHeight;
       camera.aspect = wdt / hgt;
       /* phone: camera level with the ring, looking slightly up, so the ring hugs the bottom of the hero */
-      camera.position.set(0, isMobile ? -4.3 : 0.4, isMobile ? 14 : 12);
-      camera.lookAt(0, isMobile ? -1.1 : 0, 0);
+      camera.position.set(0, 0.4, isMobile ? 13 : 12);
+      camera.lookAt(0, 0, 0);
       camera.updateProjectionMatrix();
       renderer.setSize(wdt, hgt, false);
     }
     fit();
     w.addEventListener("resize", fit);
 
-    var kMin = isMobile ? 0.4 : 0.08, kMax = isMobile ? 1 : 0.85;   /* on phones nothing sits behind the ring, so it can stay brighter */
+    var kMin = 0.08, kMax = 0.85;
     var baseVel = reduced ? 0 : (isMobile ? 0.0016 : 0.0013);
     var vel = baseVel, drag = false, lastX = 0, tilt = 0, running = true;
 
@@ -140,10 +140,12 @@
       if (e.pointerType !== "touch") tilt = (e.clientY / w.innerHeight - 0.5) * 0.3;
     }, { passive: true });
 
-    function frame() {
+    var last = 0;
+    function frame(now) {
       if (!running) return;
       w.requestAnimationFrame(frame);
-      if (!drag) { ring.rotation.y += vel; vel = lerp(vel, baseVel, 0.02); }
+      var dt = Math.min(((now || 0) - last) / 16.7, 3); last = now || 0; if (!dt || dt < 0) dt = 1;
+      if (!drag) { ring.rotation.y += vel * dt; vel = lerp(vel, baseVel, 0.02 * dt); }
       ring.rotation.x = lerp(ring.rotation.x, 0.1 + tilt, 0.05);
       for (var i = 0; i < cards.length; i++) {
         var z = Math.cos(cards[i].rotation.y + ring.rotation.y); /* 1 = nearest the viewer */
@@ -178,7 +180,7 @@
 
     var SP = 4.0;                 /* spacing between cards, world units */
     var cards = works.map(function (wk, i) {
-      var mat = new THREE.MeshBasicMaterial({ map: loadTexture(loader, wk.large), alphaMap: maskTex, transparent: true, opacity: 1 });
+      var mat = new THREE.MeshBasicMaterial({ map: loadTexture(loader, isMobile ? wk.small : wk.large), alphaMap: maskTex, transparent: true, opacity: 1 });
       var m = new THREE.Mesh(new THREE.PlaneGeometry(3.6, 3.6), mat);
       m.userData = { i: i, cat: wk.cat, alt: wk.alt, on: true, s: 1 };
       scene.add(m);
@@ -188,13 +190,14 @@
     var order = cards.slice();   /* cards currently shown, in layout order */
     var start = Math.floor((cards.length - 1) / 2);
     var dir = 1, idleAt = Date.now() + 5000, hover = false;   /* slow self-browsing while nobody touches it */
+    var startOffset = start;
     var offset = start, target = start, drag = false, moved = 0, lastX = 0, vel = 0, pxPerUnit = 200, running = true;
 
     function fit() {
       var wdt = stage.clientWidth, hgt = stage.clientHeight;
       camera.aspect = wdt / hgt;
       /* far enough that one card plus two neighbours fit on desktop, about 1.4 cards on a phone */
-      camera.position.set(0, 0, isMobile ? 8.6 : 11);
+      camera.position.set(0, 0, isMobile ? 9.4 : 11);
       camera.lookAt(0, 0, 0);
       camera.updateProjectionMatrix();
       renderer.setSize(wdt, hgt, false);
@@ -246,7 +249,7 @@
     stage.addEventListener("pointerenter", function () { hover = true; });
     stage.addEventListener("pointerleave", function () { hover = false; touched(); });
     stage.addEventListener("pointerdown", function (e) {
-      touched(); drag = true; moved = 0; lastX = e.clientX; vel = 0;
+      touched(); drag = true; moved = 0; lastX = e.clientX; vel = 0; startOffset = offset;
       stage.setPointerCapture && stage.setPointerCapture(e.pointerId);
     });
     stage.addEventListener("pointermove", function (e) {
@@ -264,6 +267,9 @@
         var rect = stage.getBoundingClientRect();
         var u = ((e.clientX - rect.left) - rect.width / 2) / pxPerUnit / SP;
         target = Math.round(offset + u);
+      } else if (e.pointerType === "touch") {
+        /* phone: one swipe moves one card in the swipe direction */
+        target = Math.round(startOffset) + (offset > startOffset ? 1 : -1);
       } else {
         target = Math.round(offset + vel * 6);
       }
@@ -285,9 +291,12 @@
     }, { passive: false });
 
     /* ---------- frame ---------- */
-    function frame() {
+    var last = 0;
+    function frame(now) {
       if (!running) return;
       w.requestAnimationFrame(frame);
+      var dt = Math.min(((now || 0) - last) / 16.7, 3); last = now || 0; if (!dt || dt < 0) dt = 1;
+      var eo = 1 - Math.pow(0.9, dt), ec = 1 - Math.pow(0.88, dt);
       if (!drag && !hover && !reduced && order.length > 1 && Math.abs(offset - target) < 0.01 && Date.now() > idleAt) {
         var cur = Math.round(target);
         if (cur >= order.length - 1) dir = -1; else if (cur <= 0) dir = 1;
@@ -295,7 +304,7 @@
       }
       if (!drag) {
         target = Math.max(0, Math.min(order.length - 1, target));
-        offset = lerp(offset, target, reduced ? 1 : 0.1);
+        offset = lerp(offset, target, reduced ? 1 : eo);
         if (!reduced && Math.abs(offset - target) < 0.0005) offset = target;
       }
       var k = 0;
@@ -310,7 +319,7 @@
           s = 1 - ad * 0.1;
           op = 1 - Math.min(ad, 2) * 0.32;
         } else { tx = c.position.x; tz = -6; ry = c.rotation.y; s = 0.001; op = 0; }
-        var e = reduced ? 1 : 0.12;
+        var e = reduced ? 1 : ec;
         c.position.x = lerp(c.position.x, tx, e);
         c.position.z = lerp(c.position.z, tz, e);
         c.rotation.y = lerp(c.rotation.y, ry, e);
