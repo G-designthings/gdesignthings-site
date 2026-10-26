@@ -48,17 +48,18 @@
     <link rel="stylesheet" href="css/style1.min.css?v=20261026b" />
 
     <style>
-      .email-box input[type="text"],
-      .email-box input[type="email"],
-      .email-box textarea {
+      .contact .form .email-box input[type="text"],
+      .contact .form .email-box input[type="email"],
+      .contact .form .email-box textarea {
         width: 100%;
-        background-color: #1c1f26;
+        background-color: #13161d;
         color: white;
-        padding: 12px;
-        border-radius: 5px;
-        border: 1px solid #BAFF29;
+        padding: 14px 16px;
+        border-radius: 6px;
+        border: 1px solid rgba(255,255,255,0.18);
         font-size: 16px;
-        margin-bottom: 15px;
+        margin: 0 0 14px 0 !important;
+        transition: border-color .2s ease;
         box-sizing: border-box;
         font-family: 'Poppins', sans-serif;
       }
@@ -70,10 +71,10 @@
         min-height: 150px;
         resize: vertical;
       }
-      .email-box input:focus,
-      .email-box textarea:focus {
+      .contact .form .email-box input:focus,
+      .contact .form .email-box textarea:focus {
         outline: none;
-        border-color: #ffffff;
+        border-color: #BAFF29;
       }
       .email-box input.invalid {
         border-color: #ff4444;
