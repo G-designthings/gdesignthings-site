@@ -3112,3 +3112,13 @@ footer {
 .site-footer .footer-legal a { color: #9a9a9a; }
 .site-footer .footer-legal a:hover { color: #BAFF29; }
 @media (max-width: 991px) { .site-footer { padding-top: 60px; } .site-footer .footer-grid { grid-template-columns: 1fr; gap: 36px; padding-bottom: 40px; } .site-footer .footer-bottom { flex-direction: column; } }
+
+/* Accent diet, 26 Oct 2026: lime only for hero, eyebrows, recommended package, links and hover. */
+.portfolio .filtering span.active, .portfolio .filtering.smplx span.active { color: #fff; }
+.portfolio .filtering span:after, .portfolio .filtering.smplx span:after { background: rgba(255,255,255,0.3) !important; }
+.progress-wrap::after { color: #fff; }
+.progress-wrap svg.progress-circle path { stroke: rgba(255,255,255,0.5); }
+.testimonials .item .info .author-name { color: #fff; }
+
+.portfolio .filtering span, .portfolio .filtering.smplx span { color: #8a8a8a; }
+.portfolio .filtering span.active, .portfolio .filtering.smplx span.active { color: #fff; }
