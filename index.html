@@ -253,6 +253,14 @@
         .navbar .navbar-collapse.collapse.show { max-height: calc(100vh - 70px) !important; opacity: 1; overflow-y: auto !important; padding-top: 6px !important; padding-bottom: 20px !important; }
       }
 
+    /* Pace loading bar: off on phones and tablets */
+    @media (max-width: 991px) { .pace { display: none !important; } }
+    /* Hero fades and drifts as you scroll into About; About eases in */
+    .mobile-screen { will-change: opacity, transform; }
+    .reveal { opacity: 0; transform: translate3d(0, 36px, 0); transition: opacity .9s cubic-bezier(.19, 1, .22, 1), transform .9s cubic-bezier(.19, 1, .22, 1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal-2 { transition-delay: .15s; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
     /* ---------- 3D layer (js/scenes-3d.js) ---------- */
     .mobile-screen { position: relative; }
     .mobile-screen > * { position: relative; z-index: 1; }
@@ -339,7 +347,7 @@
       <div class="row align-items-center">
 
         <!-- Photo left -->
-        <div class="col-lg-5 col-md-6 wow fadeInUp" data-wow-delay=".3s">
+        <div class="col-lg-5 col-md-6 reveal">
           <div style="position: relative; overflow: hidden; border-radius: 4px;">
             <img
               src="img/goran-about.webp"
@@ -355,7 +363,7 @@
         </div>
 
         <!-- Identity block right -->
-        <div class="col-lg-7 col-md-6 wow fadeInUp" data-wow-delay=".5s">
+        <div class="col-lg-7 col-md-6 reveal reveal-2">
           <div style="padding-left: 60px;">
 
             <p style="font-size: 11px; font-weight: 400; letter-spacing: 6px; text-transform: uppercase; color: #BAFF29; margin-bottom: 32px; opacity: 0.6;">About</p>
@@ -745,6 +753,32 @@
   </footer>
 
   <script>
+    /* Hero to About: the hero fades and drifts up while you scroll, About eases in. Transform and opacity only, so it stays smooth. */
+    (function (w, d) {
+      var hero = d.querySelector(".mobile-screen");
+      var reduced = w.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (hero && !reduced) {
+        var ticking = false;
+        function update() {
+          ticking = false;
+          var h = hero.offsetHeight || w.innerHeight, y = w.pageYOffset || 0;
+          var p = Math.min(1, Math.max(0, y / (h * 0.85)));
+          hero.style.opacity = (1 - p).toFixed(3);
+          hero.style.transform = "translate3d(0," + (y * 0.3).toFixed(1) + "px,0)";
+        }
+        w.addEventListener("scroll", function () { if (!ticking) { ticking = true; w.requestAnimationFrame(update); } }, { passive: true });
+        update();
+      }
+      var els = d.querySelectorAll(".reveal");
+      if (!els.length) return;
+      if (!("IntersectionObserver" in w) || reduced) { els.forEach(function (e) { e.classList.add("in"); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+      }, { threshold: 0.18 });
+      els.forEach(function (e) { io.observe(e); });
+    })(window, document);
+  </script>
+  <script>
     /* Mobile menu works at once, before jQuery and Bootstrap load. */
     (function () {
       var btn = document.querySelector(".navbar-toggler"), menu = document.getElementById("navbarSupportedContent");
@@ -793,7 +827,7 @@
         var target = $(this.getAttribute("href"));
         if (target.length) {
           event.preventDefault();
-          $("html, body").animate({ scrollTop: target.offset().top - 150 }, 0);
+          $("html, body").animate({ scrollTop: target.offset().top - 150 }, 700, "swing");
         }
       });
     });
