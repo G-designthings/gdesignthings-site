@@ -89,10 +89,10 @@
     scene.add(ring);
 
     var n = works.length;
-    var R = isMobile ? 3.0 : 7.5;
-    var size = isMobile ? 1.25 : 1.9;
+    var R = isMobile ? 3.0 : 6.2;
+    var size = isMobile ? 1.25 : 2.4;
     /* desktop: the whole ring sits behind the title plane, so the text always reads first */
-    ring.position.z = isMobile ? 0 : -4;
+    ring.position.z = isMobile ? 0 : -1.5;
     /* on phones the ring sits below the social icons instead of behind the title */
     ring.position.y = isMobile ? -4.3 : 0;
 
@@ -122,8 +122,8 @@
     fit();
     w.addEventListener("resize", fit);
 
-    var kMin = isMobile ? 0.4 : 0.1, kMax = isMobile ? 1 : 0.75;   /* on phones nothing sits behind the ring, so it can stay brighter */
-    var baseVel = reduced ? 0 : (isMobile ? 0.0016 : 0.0011);
+    var kMin = isMobile ? 0.4 : 0.08, kMax = isMobile ? 1 : 0.85;   /* on phones nothing sits behind the ring, so it can stay brighter */
+    var baseVel = reduced ? 0 : (isMobile ? 0.0016 : 0.0013);
     var vel = baseVel, drag = false, lastX = 0, tilt = 0, running = true;
 
     host.addEventListener("pointerdown", function (e) {
