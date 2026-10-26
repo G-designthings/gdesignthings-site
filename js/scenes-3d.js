@@ -89,8 +89,10 @@
     scene.add(ring);
 
     var n = works.length;
-    var R = isMobile ? 3.0 : 6.0;
-    var size = isMobile ? 1.25 : 2.2;
+    var R = isMobile ? 3.0 : 7.5;
+    var size = isMobile ? 1.25 : 1.9;
+    /* desktop: the whole ring sits behind the title plane, so the text always reads first */
+    ring.position.z = isMobile ? 0 : -4;
     /* on phones the ring sits below the social icons instead of behind the title */
     ring.position.y = isMobile ? -4.3 : 0;
 
@@ -120,8 +122,8 @@
     fit();
     w.addEventListener("resize", fit);
 
-    var kMin = isMobile ? 0.4 : 0.14;   /* on phones nothing sits behind the ring, so it can stay brighter */
-    var baseVel = reduced ? 0 : 0.0022;
+    var kMin = isMobile ? 0.4 : 0.1, kMax = isMobile ? 1 : 0.75;   /* on phones nothing sits behind the ring, so it can stay brighter */
+    var baseVel = reduced ? 0 : (isMobile ? 0.0016 : 0.0011);
     var vel = baseVel, drag = false, lastX = 0, tilt = 0, running = true;
 
     host.addEventListener("pointerdown", function (e) {
@@ -145,7 +147,7 @@
       ring.rotation.x = lerp(ring.rotation.x, 0.1 + tilt, 0.05);
       for (var i = 0; i < cards.length; i++) {
         var z = Math.cos(cards[i].rotation.y + ring.rotation.y); /* 1 = nearest the viewer */
-        var k = kMin + (1 - kMin) * (1 - (z + 1) / 2);         /* linear space: front cards dim so the lime title stays readable */
+        var k = kMin + (kMax - kMin) * (1 - (z + 1) / 2);      /* linear space: front cards dim so the lime title stays readable */
         cards[i].material.color.setScalar(k);
       }
       renderer.render(scene, camera);
@@ -185,6 +187,7 @@
 
     var order = cards.slice();   /* cards currently shown, in layout order */
     var start = Math.floor((cards.length - 1) / 2);
+    var dir = 1, idleAt = Date.now() + 5000, hover = false;   /* slow self-browsing while nobody touches it */
     var offset = start, target = start, drag = false, moved = 0, lastX = 0, vel = 0, pxPerUnit = 200, running = true;
 
     function fit() {
@@ -208,7 +211,7 @@
       order.forEach(function (c, k) {
         var b = d.createElement("button");
         b.type = "button"; b.className = "dot"; b.setAttribute("aria-label", c.userData.alt || ("Work " + (k + 1)));
-        b.addEventListener("click", function () { target = k; });
+        b.addEventListener("click", function () { target = k; touched(); });
         dotsEl.appendChild(b);
       });
     }
@@ -239,8 +242,11 @@
     renderDots();
 
     /* ---------- input ---------- */
+    function touched() { idleAt = Date.now() + 9000; }
+    stage.addEventListener("pointerenter", function () { hover = true; });
+    stage.addEventListener("pointerleave", function () { hover = false; touched(); });
     stage.addEventListener("pointerdown", function (e) {
-      drag = true; moved = 0; lastX = e.clientX; vel = 0;
+      touched(); drag = true; moved = 0; lastX = e.clientX; vel = 0;
       stage.setPointerCapture && stage.setPointerCapture(e.pointerId);
     });
     stage.addEventListener("pointermove", function (e) {
@@ -266,13 +272,14 @@
     stage.addEventListener("pointerup", release);
     stage.addEventListener("pointercancel", release);
     stage.addEventListener("keydown", function (e) {
+      touched();
       if (e.key === "ArrowRight") { target = Math.min(order.length - 1, Math.round(target) + 1); e.preventDefault(); }
       if (e.key === "ArrowLeft") { target = Math.max(0, Math.round(target) - 1); e.preventDefault(); }
     });
     stage.addEventListener("wheel", function (e) {
       /* horizontal wheel or trackpad swipe browses, vertical wheel keeps scrolling the page */
       if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-        e.preventDefault();
+        e.preventDefault(); touched();
         target = Math.max(0, Math.min(order.length - 1, target + e.deltaX / 120));
       }
     }, { passive: false });
@@ -281,6 +288,11 @@
     function frame() {
       if (!running) return;
       w.requestAnimationFrame(frame);
+      if (!drag && !hover && !reduced && order.length > 1 && Math.abs(offset - target) < 0.01 && Date.now() > idleAt) {
+        var cur = Math.round(target);
+        if (cur >= order.length - 1) dir = -1; else if (cur <= 0) dir = 1;
+        target = cur + dir; idleAt = Date.now() + 4000;
+      }
       if (!drag) {
         target = Math.max(0, Math.min(order.length - 1, target));
         offset = lerp(offset, target, reduced ? 1 : 0.1);
