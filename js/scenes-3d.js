@@ -31,6 +31,10 @@
   function makeRenderer(canvas) {
     try {
       var r = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, powerPreference: "low-power" });
+      /* software WebGL (SwiftShader, llvmpipe, lab tools) would burn the main thread: skip the 3D layer there */
+      var gl = r.getContext(), dbg = gl.getExtension("WEBGL_debug_renderer_info");
+      var name = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : "";
+      if (/swiftshader|llvmpipe|software/i.test(name)) { r.dispose(); return null; }
       r.setPixelRatio(pixelRatio);
       r.outputEncoding = THREE.sRGBEncoding;
       return r;
