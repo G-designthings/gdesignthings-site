@@ -161,7 +161,7 @@
   /* =========================================================================
      2. PORTFOLIO COVERFLOW
      ========================================================================= */
-  (function coverflow() {
+  function coverflow() {
     var section = d.querySelector(".portfolio");
     var stage = d.getElementById("gallery-3d");
     var dotsEl = d.querySelector(".gallery-3d-dots");
@@ -332,5 +332,18 @@
     }
     frame();
     watch(stage, function (on) { if (on && !running) { running = true; frame(); } else if (!on) { running = false; } });
+  }
+
+  /* The coverflow is built only when the portfolio section gets close to the viewport,
+     so the hero never pays for it and the main thread stays free right after load. */
+  (function () {
+    var section = d.querySelector(".portfolio");
+    if (!section) return;
+    var started = false;
+    function start() { if (started) return; started = true; w.requestAnimationFrame(function () { coverflow(); }); }
+    if ("IntersectionObserver" in w) {
+      var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); start(); } }, { rootMargin: "900px 0px" });
+      io.observe(section);
+    } else { start(); }
   })();
 })(window, document);
