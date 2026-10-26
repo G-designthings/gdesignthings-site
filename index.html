@@ -815,19 +815,20 @@
   </script>
 
   <script>
-    /* 3D layer (hero ring + portfolio coverflow) loads after first interaction, or 3.5s after page load, so first paint stays fast. */
+    /* 3D layer (hero ring + portfolio coverflow): desktop only, loads on first interaction (or 6 s after load, like the site JS).
+       Phones and tablets get the plain page for maximum speed. */
     (function (w, d) {
+      if (w.matchMedia("(max-width: 991px)").matches || w.matchMedia("(pointer: coarse)").matches) return;
       var done = false;
       function add(src, cb) { var s = d.createElement("script"); s.src = src; s.defer = true; s.onload = cb; d.body.appendChild(s); }
       function load() {
         if (done) return; done = true;
-        ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.removeEventListener(e, load); });
-        add("js/three.min.js?v=r128d", function () { add("js/scenes-3d.js?v=4"); });
+        ["scroll","mousemove","keydown","click"].forEach(function (e) { w.removeEventListener(e, load); });
+        add("js/three.min.js?v=r128d", function () { add("js/scenes-3d.js?v=5"); });
       }
-      ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.addEventListener(e, load, { passive: true }); });
-      var phone = w.matchMedia("(max-width: 767px)").matches;
-      function soon() { if (phone) { w.setTimeout(load, 2000); return; } if (w.requestIdleCallback) w.requestIdleCallback(load, { timeout: 1200 }); else w.setTimeout(load, 600); }
-      if (d.readyState === "complete") soon(); else w.addEventListener("load", soon);
+      ["scroll","mousemove","keydown","click"].forEach(function (e) { w.addEventListener(e, load, { passive: true }); });
+      function later() { w.setTimeout(load, 6000); }
+      if (d.readyState === "complete") later(); else w.addEventListener("load", later);
     })(window, document);
   </script>
 
