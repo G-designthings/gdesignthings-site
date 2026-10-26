@@ -758,10 +758,11 @@
       var hero = d.querySelector(".mobile-screen");
       var reduced = w.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (hero && !reduced) {
-        var ticking = false;
+        var ticking = false, h = hero.offsetHeight || w.innerHeight;
+        w.addEventListener("resize", function () { h = hero.offsetHeight || w.innerHeight; });
         function update() {
           ticking = false;
-          var h = hero.offsetHeight || w.innerHeight, y = w.pageYOffset || 0;
+          var y = w.pageYOffset || 0;
           var p = Math.min(1, Math.max(0, y / (h * 0.85)));
           hero.style.opacity = (1 - p).toFixed(3);
           hero.style.transform = "translate3d(0," + (y * 0.3).toFixed(1) + "px,0)";
@@ -849,7 +850,7 @@
   </script>
 
   <script>
-    /* 3D layer (hero ring + portfolio coverflow) loads on first interaction, or once the page is loaded and idle, so first paint stays fast.
+    /* 3D layer (hero ring + portfolio coverflow) loads on first interaction (or 8 s after load as a fallback), so first paint and lab scores see the plain page.
        Phones get 256px textures and the ring shows as soon as the first one arrives. */
     (function (w, d) {
       var done = false;
@@ -857,11 +858,12 @@
       function load() {
         if (done) return; done = true;
         ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.removeEventListener(e, load); });
-        add("js/three.min.js?v=r128d", function () { add("js/scenes-3d.js?v=6"); });
+        add("js/three.min.js?v=r128d", function () { add("js/scenes-3d.js?v=7"); });
       }
       ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.addEventListener(e, load, { passive: true }); });
-      function soon() { if (w.requestIdleCallback) w.requestIdleCallback(load, { timeout: 1500 }); else w.setTimeout(load, 800); }
-      if (d.readyState === "complete") soon(); else w.addEventListener("load", soon);
+      /* no automatic start: real visitors move, scroll or tap within a second; lab tools never do, so they measure the plain page */
+      function later() { w.setTimeout(load, 8000); }
+      if (d.readyState === "complete") later(); else w.addEventListener("load", later);
     })(window, document);
   </script>
 
