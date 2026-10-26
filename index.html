@@ -822,7 +822,7 @@
       function load() {
         if (done) return; done = true;
         ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.removeEventListener(e, load); });
-        add("js/three.min.js?v=r128", function () { add("js/scenes-3d.js?v=1"); });
+        add("js/three.min.js?v=r128b", function () { add("js/scenes-3d.js?v=2"); });
       }
       ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.addEventListener(e, load, { passive: true }); });
       if (d.readyState === "complete") w.setTimeout(load, 3500); else w.addEventListener("load", function () { w.setTimeout(load, 3500); });
