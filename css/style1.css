@@ -3088,3 +3088,9 @@ footer {
     font-size: 42px;
   }
 }
+
+/* Footer social, 26 Oct 2026: bigger, readable, lime on hover. Grey block behind Follow Me removed. */
+.footer-half .social-icon .stit.simple-btn { padding: 0; margin-bottom: 22px; }
+.footer-half .social-icon .stit.simple-btn:after { display: none; }
+.footer-half .social-icon .social a.icon { width: 52px; height: 52px; line-height: 50px; margin: 0 10px 10px 0; font-size: 19px; color: #fff; opacity: 1; background: transparent; border: 1px solid rgba(255,255,255,0.22); border-radius: 50%; display: inline-block; text-align: center; transition: border-color .2s ease, color .2s ease; }
+.footer-half .social-icon .social a.icon:hover { color: #BAFF29; border-color: #BAFF29; background: transparent; }
