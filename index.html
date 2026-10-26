@@ -258,7 +258,7 @@
     .mobile-screen > * { position: relative; z-index: 1; }
     .mobile-screen > canvas.hero-3d { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1.4s ease; }
     .mobile-screen.hero-3d-ready > canvas.hero-3d { opacity: .55; }
-    @media (max-width: 767px) { .mobile-screen.hero-3d-ready > canvas.hero-3d { opacity: .8; } }
+    @media (max-width: 767px) { .mobile-screen.hero-3d-ready > canvas.hero-3d { opacity: .5; } }
     .gallery-3d-wrap { display: none; }
     .portfolio.is-3d .gallery-3d-wrap { display: block; }
     .portfolio.is-3d .gallery { display: none; }
@@ -822,10 +822,11 @@
       function load() {
         if (done) return; done = true;
         ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.removeEventListener(e, load); });
-        add("js/three.min.js?v=r128b", function () { add("js/scenes-3d.js?v=2"); });
+        add("js/three.min.js?v=r128c", function () { add("js/scenes-3d.js?v=3"); });
       }
       ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.addEventListener(e, load, { passive: true }); });
-      if (d.readyState === "complete") w.setTimeout(load, 3500); else w.addEventListener("load", function () { w.setTimeout(load, 3500); });
+      function soon() { if (w.requestIdleCallback) w.requestIdleCallback(load, { timeout: 1200 }); else w.setTimeout(load, 600); }
+      if (d.readyState === "complete") soon(); else w.addEventListener("load", soon);
     })(window, document);
   </script>
 
