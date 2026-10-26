@@ -21,6 +21,7 @@
     works.push({
       large: img.getAttribute("src"),
       small: img.getAttribute("data-small") || img.getAttribute("src"),
+      tiny: (img.getAttribute("data-small") || "").replace("/3d/", "/3d/s/") || img.getAttribute("src"),
       alt: img.getAttribute("alt") || "",
       cat: item.classList.contains("mono") ? "mono" : "color"
     });
@@ -96,12 +97,15 @@
     /* on phones the ring sits below the social icons instead of behind the title */
     ring.position.y = 0;
 
-    var manager = new THREE.LoadingManager();
-    manager.onLoad = function () { host.classList.add("hero-3d-ready"); };
-    var loader = new THREE.TextureLoader(manager);
+    var loader = new THREE.TextureLoader();
 
     var cards = works.map(function (wk, i) {
-      var mat = new THREE.MeshBasicMaterial({ map: loadTexture(loader, wk.small), alphaMap: maskTex, transparent: true, side: THREE.DoubleSide });
+      var mat = new THREE.MeshBasicMaterial({ alphaMap: maskTex, transparent: true, opacity: 0, side: THREE.DoubleSide });
+      mat.map = loader.load(isMobile ? wk.tiny : wk.small, function (tex) {
+        tex.encoding = THREE.sRGBEncoding; tex.anisotropy = 4; mat.needsUpdate = true;
+        mat.userData.ready = true;                       /* card fades in on its own, see frame() */
+        host.classList.add("hero-3d-ready");              /* layer appears with the first texture, not the last */
+      });
       var m = new THREE.Mesh(new THREE.PlaneGeometry(size, size), mat);
       var a = (i / n) * Math.PI * 2;
       m.position.set(Math.sin(a) * R, 0, Math.cos(a) * R);
@@ -151,6 +155,7 @@
         var z = Math.cos(cards[i].rotation.y + ring.rotation.y); /* 1 = nearest the viewer */
         var k = kMin + (kMax - kMin) * (1 - (z + 1) / 2);      /* linear space: front cards dim so the lime title stays readable */
         cards[i].material.color.setScalar(k);
+        if (cards[i].material.userData.ready && cards[i].material.opacity < 1) cards[i].material.opacity = Math.min(1, cards[i].material.opacity + 0.04 * dt);
       }
       renderer.render(scene, camera);
     }
