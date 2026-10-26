@@ -3107,11 +3107,16 @@ footer {
 .site-footer .footer-social { display: flex; gap: 10px; flex-wrap: wrap; }
 .site-footer .footer-social a { width: 46px; height: 46px; line-height: 44px; border: 1px solid rgba(255,255,255,0.22); border-radius: 50%; color: #fff; font-size: 17px; text-align: center; display: inline-block; margin: 0; transition: border-color .2s ease, color .2s ease; }
 .site-footer .footer-social a:hover { color: #BAFF29; border-color: #BAFF29; }
-.site-footer .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 24px 0 28px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.site-footer .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 24px 0 28px; }
+.site-footer .footer-bottom-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 10px; }
 .site-footer .footer-bottom p { margin: 0; color: #7a7a7a; font-size: 12px; letter-spacing: .3px; }
-.site-footer .footer-legal a { color: #9a9a9a; }
-.site-footer .footer-legal a:hover { color: #BAFF29; }
-@media (max-width: 991px) { .site-footer { padding-top: 60px; } .site-footer .footer-grid { grid-template-columns: 1fr; gap: 36px; padding-bottom: 40px; } .site-footer .footer-bottom { flex-direction: column; } }
+.site-footer .footer-links { display: flex; gap: 22px; }
+.site-footer .footer-links a { color: #c8c8c8; font-size: 12px; font-weight: 300; letter-spacing: .3px; margin: 0; display: inline-block; transition: color .2s ease; }
+.site-footer .footer-links a:hover { color: #BAFF29; }
+.site-footer .footer-legal { color: #5f5f5f !important; font-size: 11px !important; }
+.site-footer .footer-legal span { display: inline; color: inherit; font-size: inherit; margin: 0; }
+.site-footer .footer-legal span + span::before { content: "\00a0\00b7\00a0"; }
+@media (max-width: 991px) { .site-footer { padding-top: 60px; } .site-footer .footer-grid { grid-template-columns: 1fr; gap: 36px; padding-bottom: 40px; } .site-footer .footer-bottom { padding-bottom: 90px; } .site-footer .footer-bottom-row { flex-direction: column-reverse; align-items: flex-start; gap: 14px; margin-bottom: 18px; } .site-footer .footer-legal span { display: block; line-height: 1.8; } .site-footer .footer-legal span + span::before { content: none; } }
 
 /* Accent diet, 26 Oct 2026: lime only for hero, eyebrows, recommended package, links and hover. */
 .portfolio .filtering span.active, .portfolio .filtering.smplx span.active { color: #fff; }
