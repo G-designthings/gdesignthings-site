@@ -91,7 +91,7 @@
       .cs-card:hover, .cs-card:focus-visible { border-color: rgba(186,255,41,.5); transform: translateY(-4px); color: #fff; text-decoration: none; outline: none; }
       .cs-card.is-wide { grid-column: span 2; }
       @media (max-width: 575px) { .cs-card.is-wide { grid-column: span 1; } }
-      .cs-cover { aspect-ratio: 4 / 3; overflow: hidden; background: #11141b; max-width: 100%; }
+      .cs-cover { aspect-ratio: 16 / 9; overflow: hidden; background: #11141b; max-width: 100%; }
       .cs-card.is-wide .cs-cover { aspect-ratio: 16 / 9; }
       .cs-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
       .cs-card:hover .cs-cover img { transform: scale(1.04); }
@@ -116,6 +116,8 @@
       .cs-hero.in { opacity: 1; transform: none; }
       .cs-hero:hover, .cs-hero:focus-visible { color: #fff; text-decoration: none; outline: none; }
       .cs-hero img { width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover; object-position: center; display: block; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+      .cs-hero.is-tall img, .cs-cover.is-tall img { object-position: center top; }
+      .cs-book.is-single .cs-pages { max-width: 760px; margin: 0 auto; }
       @media (max-width: 767px) { .cs-hero img { aspect-ratio: 3 / 4; } .cs-hero::after { background: linear-gradient(to top, rgba(12,15,22,.96) 0%, rgba(12,15,22,.6) 45%, rgba(12,15,22,.05) 75%); } }
       .cs-hero:hover img { transform: scale(1.03); }
       .cs-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(12,15,22,.92) 0%, rgba(12,15,22,.35) 45%, rgba(12,15,22,0) 75%); }
@@ -219,14 +221,110 @@
         <div class="container">
           <div class="cs-grid">
             <a class="cs-card reveal is-wide" href="case-studies/spaces.html" style="transition-delay: 0ms">
-              <div class="cs-cover"><img src="img/case-studies/spaces/cover.webp" alt="SPACES brand book" loading="eager" width="1200" height="900" /></div>
+              <div class="cs-cover"><img src="img/case-studies/spaces/cover.webp" alt="SPACES brand book" loading="eager" width="1200" height="840" /></div>
               <span class="cs-tag">Brand Identity System</span>
               <div class="cs-meta"><div><h3>SPACES<sup>®</sup></h3><p>Energy / Logistics / Property</p></div><span class="arrow">→</span></div>
             </a>
-          </div>
-          <div class="cs-archive reveal">
-            <p class="eyebrow">More brand systems</p>
-            <ul><li>BOX caffee</li><li>QFL</li><li>Microapp.io</li><li>Pickle &amp; Pin</li><li>Farfalla</li><li>UK smiles</li><li>DETOUR</li><li>Shepherd &amp; Grace</li><li>Soul Search</li><li>Aoodor</li><li>GLOBESTAR Express</li><li>iPetStar</li><li>W’Ink</li><li>Cortado</li><li>Kave Sales</li><li>Saliencia</li><li>Recrewer</li><li>Aliyz</li><li>m/eleven</li><li>Winged Pony</li></ul>
+            <a class="cs-card reveal" href="case-studies/globestar.html" style="transition-delay: 60ms">
+              <div class="cs-cover"><img src="img/case-studies/globestar/globestar-01.webp" alt="GLOBESTAR Express brand book" loading="lazy" width="1600" height="900" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>GLOBESTAR Express<sup>®</sup></h3><p>Transportation / Logistics</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/ipetstar.html" style="transition-delay: 120ms">
+              <div class="cs-cover"><img src="img/case-studies/ipetstar/ipetstar-01.webp" alt="iPetStar brand book" loading="lazy" width="1600" height="900" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>iPetStar<sup>®</sup></h3><p>Pet Services / Digital Platform</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/microapp.html" style="transition-delay: 180ms">
+              <div class="cs-cover"><img src="img/case-studies/microapp/microapp-01.webp" alt="Microapp.io brand book" loading="lazy" width="1600" height="900" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>Microapp.io<sup>®</sup></h3><p>Tech / SaaS Platform</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/qfl.html" style="transition-delay: 240ms">
+              <div class="cs-cover"><img src="img/case-studies/qfl/qfl-01.webp" alt="QFL brand book" loading="lazy" width="1600" height="1132" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>QFL<sup>®</sup></h3><p>Qazaqstan Football League · Broadcast TV Experience</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/uk-smiles.html" style="transition-delay: 300ms">
+              <div class="cs-cover"><img src="img/case-studies/uk-smiles/uk-smiles-01.webp" alt="UK smiles brand book" loading="lazy" width="1600" height="900" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>UK smiles<sup>®</sup></h3><p>Dental Centre</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/saliencia.html" style="transition-delay: 360ms">
+              <div class="cs-cover"><img src="img/case-studies/saliencia/saliencia-16.webp" alt="Saliencia brand book" loading="lazy" width="1600" height="900" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>Saliencia<sup>®</sup></h3><p>Energy / Fashion / Lifestyle</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/detour.html" style="transition-delay: 420ms">
+              <div class="cs-cover"><img src="img/case-studies/detour/detour-01.webp" alt="DETOUR brand book" loading="lazy" width="1600" height="900" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>DETOUR<sup>®</sup></h3><p>Coffee Brand / Lifestyle</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/aoodor.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/aoodor/aoodor-01.webp" alt="Aoodor brand book" loading="lazy" width="1600" height="900" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>Aoodor<sup>®</sup></h3><p>Outdoor / Smart Home &amp; Lifestyle</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/farfalla.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/farfalla/farfalla-01.webp" alt="Farfalla brand book" loading="lazy" width="1600" height="1132" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>Farfalla<sup>®</sup></h3><p>Café / Specialty Coffee Shop</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/soul-search.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/soul-search/soul-search-01.webp" alt="Soul Search brand book" loading="lazy" width="1600" height="900" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>Soul Search<sup>®</sup></h3><p>Luxury Dating Platform</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/recrewer.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/recrewer/recrewer-01.webp" alt="Recrewer brand book" loading="lazy" width="1600" height="900" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>Recrewer<sup>®</sup></h3><p>Recruitment Tech / SaaS Platform</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/shepherd-and-grace.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/shepherd-and-grace/shepherd-and-grace-01.webp" alt="Shepherd &amp; Grace brand book" loading="lazy" width="1600" height="900" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>Shepherd &amp; Grace<sup>®</sup></h3><p>Jewelry / Luxury Accessories</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/aliyz.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/aliyz/aliyz-01.webp" alt="Aliyz brand book" loading="lazy" width="1600" height="1132" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>Aliyz<sup>®</sup></h3><p>Metal Fabrication &amp; Engineering</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/wink.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/wink/wink-01.webp" alt="W’Ink brand book" loading="lazy" width="1600" height="1132" /></div>
+              <span class="cs-tag">Brand Book &amp; Pitch Deck</span>
+              <div class="cs-meta"><div><h3>W’Ink<sup>®</sup></h3><p>Event / Tattoo Industry</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/winged-pony.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/winged-pony/winged-pony-01.webp" alt="Winged Pony brand book" loading="lazy" width="1600" height="1132" /></div>
+              <span class="cs-tag">Brand Identity System</span>
+              <div class="cs-meta"><div><h3>Winged Pony<sup>®</sup></h3><p>Leathercraft</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/box-caffee.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/box-caffee/box-caffee-06.webp" alt="BOX caffee brand book" loading="lazy" width="1600" height="900" /></div>
+              <span class="cs-tag">Logo Core Kit</span>
+              <div class="cs-meta"><div><h3>BOX caffee<sup>®</sup></h3><p>Caffee / Bar</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/pickle-and-pin.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/pickle-and-pin/pickle-and-pin-02.webp" alt="Pickle &amp; Pin brand book" loading="lazy" width="1600" height="1237" /></div>
+              <span class="cs-tag">Brand Book</span>
+              <div class="cs-meta"><div><h3>Pickle &amp; Pin<sup>®</sup></h3><p>Sports &amp; Leisure / Modern Club</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/kave-sales.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/kave-sales/kave-sales-05.webp" alt="Kave Sales Inc. brand book" loading="lazy" width="1600" height="873" /></div>
+              <span class="cs-tag">Logo &amp; Brand System</span>
+              <div class="cs-meta"><div><h3>Kave Sales Inc.<sup>®</sup></h3><p>Custom Metal Fabrication</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/cortado.html" style="transition-delay: 480ms">
+              <div class="cs-cover"><img src="img/case-studies/cortado/cortado-01.webp" alt="Cortado brand book" loading="lazy" width="1600" height="1594" /></div>
+              <span class="cs-tag">Logo Design</span>
+              <div class="cs-meta"><div><h3>Cortado<sup>®</sup></h3><p>Caffe Bar</p></div><span class="arrow">→</span></div>
+            </a>
+            <a class="cs-card reveal" href="case-studies/m-eleven.html" style="transition-delay: 480ms">
+              <div class="cs-cover is-tall"><img src="img/case-studies/m-eleven/m-eleven-01.webp" alt="m/eleven brand book" loading="lazy" width="857" height="1600" /></div>
+              <span class="cs-tag">Logo Design</span>
+              <div class="cs-meta"><div><h3>m/eleven<sup>®</sup></h3><p>Photographer, Visual Artist</p></div><span class="arrow">→</span></div>
+            </a>
           </div>
           <div class="lets text-center" style="margin-top: 60px;">
             <a href="contact.html" class="btn-curve btn-lit"><span>Start a project</span></a>
