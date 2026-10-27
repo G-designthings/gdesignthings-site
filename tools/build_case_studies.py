@@ -41,7 +41,8 @@ def slice_between(text, start, end, include_end=True):
 
 
 HEAD_TOP = TPL[: TPL.index("    <title>")]  # doctype .. GTM loader
-HEAD_LINKS = slice_between(TPL, '    <link rel="icon" href="img/favicon.ico', '<link rel="stylesheet" href="css/style1.min.css?v=20261026c" />')
+HEAD_LINKS = slice_between(TPL, '    <link rel="icon" href="img/favicon.ico', '<link rel="stylesheet" href="css/style1.min.css?v=')
+HEAD_LINKS = TPL[TPL.index(HEAD_LINKS): TPL.index(" />", TPL.index(HEAD_LINKS) + len(HEAD_LINKS)) + 3]
 SHARED_CSS = slice_between(TPL, "    /* One CTA style for the whole site */", "    </style>")
 BODY_TOP = slice_between(TPL, "  <body>", "    </nav>")
 FOOTER = slice_between(TPL, '    <footer class="site-footer">', "  </footer>")
@@ -80,6 +81,7 @@ CSS = """
       @media (max-width: 575px) { .cs-card.is-wide { grid-column: span 1; } }
       .cs-cover { aspect-ratio: 16 / 9; overflow: hidden; background: #11141b; max-width: 100%; }
       .cs-card.is-wide .cs-cover { aspect-ratio: 16 / 9; }
+      @media (min-width: 576px) { .cs-card.is-wide + .cs-card .cs-cover { aspect-ratio: auto; flex: 1; min-height: 0; } }
       .cs-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
       .cs-card:hover .cs-cover img { transform: scale(1.04); }
       .cs-tag { position: absolute; top: 14px; left: 14px; background: rgba(12,15,22,.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 4px 12px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #BAFF29; }
@@ -105,6 +107,19 @@ CSS = """
       .cs-hero img { width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover; object-position: center; display: block; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
       .cs-hero.is-tall img, .cs-cover.is-tall img { object-position: center top; }
       .cs-book.is-single .cs-pages { max-width: 760px; margin: 0 auto; }
+      .cs-zoom { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; font: inherit; }
+      .cs-zoom:focus-visible { outline: 2px solid #BAFF29; outline-offset: -2px; }
+      .cs-lightbox { position: fixed; inset: 0; z-index: 9999; background: rgba(8,10,14,.96); display: flex; align-items: center; justify-content: center; padding: 56px 64px; cursor: zoom-out; }
+      .cs-lightbox[hidden] { display: none; }
+      .cs-lightbox img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 4px; cursor: default; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+      .cs-lightbox button { position: absolute; border: 1px solid rgba(255,255,255,.2); background: rgba(12,15,22,.7); color: #fff; width: 44px; height: 44px; border-radius: 50%; font-size: 26px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: border-color .2s, color .2s; font-family: inherit; }
+      .cs-lightbox button:hover, .cs-lightbox button:focus-visible { border-color: #BAFF29; color: #BAFF29; outline: none; }
+      .cs-lb-close { top: 16px; right: 16px; }
+      .cs-lb-prev { left: 12px; top: 50%; transform: translateY(-50%); }
+      .cs-lb-next { right: 12px; top: 50%; transform: translateY(-50%); }
+      .cs-lb-count { position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; margin: 0; font-size: 12px; letter-spacing: 2px; color: #9a9a9a; }
+      @media (max-width: 767px) { .cs-lightbox { padding: 60px 8px; } .cs-lb-prev, .cs-lb-next { display: none; } }
+      body.cs-lb-open { overflow: hidden; }
       @media (max-width: 767px) { .cs-hero img { aspect-ratio: 3 / 4; } .cs-hero::after { background: linear-gradient(to top, rgba(12,15,22,.96) 0%, rgba(12,15,22,.6) 45%, rgba(12,15,22,.05) 75%); } }
       .cs-hero:hover img { transform: scale(1.03); }
       .cs-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(12,15,22,.92) 0%, rgba(12,15,22,.35) 45%, rgba(12,15,22,0) 75%); }
@@ -227,10 +242,12 @@ def build_index():
 
 
 def build_study(s, prev, nxt):
+    files = s.get("page_files") or [f"{s['pages_dir']}/{s['pages_prefix']}{n:02d}.webp" for n in range(1, s["pages"] + 1)]
+    s["pages"] = len(files)
     pages = []
-    for n in range(1, s["pages"] + 1):
-        src = f"{s['pages_dir']}/{s['pages_prefix']}{n:02d}.webp"
-        pages.append(f'            <figure><img src="{src}" alt="{html.escape(s["name"])} brand guidelines, page {n}" loading="{"eager" if n <= 2 else "lazy"}" decoding="async" width="{s["page_width"]}" height="{s["page_height"]}" /></figure>')
+    for n, src in enumerate(files, 1):
+        pw, ph = img_size(src, (s["page_width"], s["page_height"]))
+        pages.append(f'            <figure><button type="button" class="cs-zoom" data-src="{src}" aria-label="Zoom page {n}"><img src="{src}" alt="{html.escape(s["name"])} brand guidelines, page {n}" loading="{"eager" if n <= 2 else "lazy"}" decoding="async" width="{pw}" height="{ph}" /></button></figure>')
     site = ""
     if s.get("url"):
         label = re.sub(r"^https?://(www\.)?", "", s["url"]).rstrip("/")
@@ -283,6 +300,13 @@ def build_study(s, prev, nxt):
       </section>
     </div>
     </main>
+    <div class="cs-lightbox" id="cs-lightbox" hidden>
+      <button type="button" class="cs-lb-close" id="cs-lb-close" aria-label="Close">×</button>
+      <button type="button" class="cs-lb-prev" id="cs-lb-prev" aria-label="Previous page">‹</button>
+      <img id="cs-lb-img" src="" alt="" />
+      <button type="button" class="cs-lb-next" id="cs-lb-next" aria-label="Next page">›</button>
+      <p class="cs-lb-count" id="cs-lb-count"></p>
+    </div>
     <script>
     /* Brand book: closed preview, opens on click (hero or button); pages and blocks fade up as they enter the viewport. */
     (function () {{
@@ -308,6 +332,20 @@ def build_study(s, prev, nxt):
       items.forEach(function (el) {{ io.observe(el); }});
       /* hero: show at once */
       window.requestAnimationFrame(function () {{ hero.classList.add("in"); }});
+      /* zoom: click a page to open it full screen; arrows and keys move between pages */
+      var lb = document.getElementById("cs-lightbox"), lbImg = document.getElementById("cs-lb-img"), lbCount = document.getElementById("cs-lb-count");
+      var zooms = Array.prototype.slice.call(document.querySelectorAll(".cs-zoom")), cur = 0;
+      function show(i) {{ cur = (i + zooms.length) % zooms.length; lbImg.src = zooms[cur].getAttribute("data-src"); lbImg.alt = zooms[cur].querySelector("img").alt; lbCount.textContent = (cur + 1) + " / " + zooms.length; }}
+      function openLb(i) {{ show(i); lb.hidden = false; document.body.classList.add("cs-lb-open"); }}
+      function closeLb() {{ lb.hidden = true; document.body.classList.remove("cs-lb-open"); }}
+      zooms.forEach(function (z, i) {{ z.addEventListener("click", function () {{ openLb(i); }}); }});
+      document.getElementById("cs-lb-close").addEventListener("click", closeLb);
+      document.getElementById("cs-lb-prev").addEventListener("click", function () {{ show(cur - 1); }});
+      document.getElementById("cs-lb-next").addEventListener("click", function () {{ show(cur + 1); }});
+      lb.addEventListener("click", function (e) {{ if (e.target === lb) closeLb(); }});
+      document.addEventListener("keydown", function (e) {{ if (lb.hidden) return; if (e.key === "Escape") closeLb(); if (e.key === "ArrowRight") show(cur + 1); if (e.key === "ArrowLeft") show(cur - 1); }});
+      var tx = null; lb.addEventListener("touchstart", function (e) {{ tx = e.touches[0].clientX; }}, {{ passive: true }});
+      lb.addEventListener("touchend", function (e) {{ if (tx === null) return; var dx = e.changedTouches[0].clientX - tx; tx = null; if (dx > 50) show(cur - 1); if (dx < -50) show(cur + 1); }});
     }})();
     </script>"""
     out = page(f"{s['name']} Brand Book | G.designthings", f"{s['name']} brand identity system by G.designthings. {s['description']}", f"https://www.gdesignthings.com/case-studies/{s['slug']}.html", body, 1, "case-studies", og=s["cover"])
