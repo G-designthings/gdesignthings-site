@@ -412,10 +412,11 @@ span:hover {
 /* ====================== [ End Text Animation & Images ] ====================== */
 /* ====================== [ Start Cursor Style ] ====================== */
 body {
-  cursor: none;
+  cursor: auto;
 }
 
 .mouse-cursor {
+  display: none !important;
   position: fixed;
   left: 0;
   top: 0;
