@@ -14,6 +14,21 @@ import json
 import os
 import re
 
+try:
+    from PIL import Image
+except ImportError:  # pragma: no cover
+    Image = None
+
+
+def img_size(rel, default=(1200, 900)):
+    if Image is None:
+        return default
+    try:
+        with Image.open(os.path.join(ROOT, rel)) as im:
+            return im.size
+    except Exception:
+        return default
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TPL = open(os.path.join(ROOT, "process.html"), encoding="utf-8").read()
 DATA = json.load(open(os.path.join(ROOT, "case-studies", "case-studies.json"), encoding="utf-8"))
@@ -63,7 +78,7 @@ CSS = """
       .cs-card:hover, .cs-card:focus-visible { border-color: rgba(186,255,41,.5); transform: translateY(-4px); color: #fff; text-decoration: none; outline: none; }
       .cs-card.is-wide { grid-column: span 2; }
       @media (max-width: 575px) { .cs-card.is-wide { grid-column: span 1; } }
-      .cs-cover { aspect-ratio: 4 / 3; overflow: hidden; background: #11141b; max-width: 100%; }
+      .cs-cover { aspect-ratio: 16 / 9; overflow: hidden; background: #11141b; max-width: 100%; }
       .cs-card.is-wide .cs-cover { aspect-ratio: 16 / 9; }
       .cs-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
       .cs-card:hover .cs-cover img { transform: scale(1.04); }
@@ -88,6 +103,8 @@ CSS = """
       .cs-hero.in { opacity: 1; transform: none; }
       .cs-hero:hover, .cs-hero:focus-visible { color: #fff; text-decoration: none; outline: none; }
       .cs-hero img { width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover; object-position: center; display: block; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+      .cs-hero.is-tall img, .cs-cover.is-tall img { object-position: center top; }
+      .cs-book.is-single .cs-pages { max-width: 760px; margin: 0 auto; }
       @media (max-width: 767px) { .cs-hero img { aspect-ratio: 3 / 4; } .cs-hero::after { background: linear-gradient(to top, rgba(12,15,22,.96) 0%, rgba(12,15,22,.6) 45%, rgba(12,15,22,.05) 75%); } }
       .cs-hero:hover img { transform: scale(1.03); }
       .cs-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(12,15,22,.92) 0%, rgba(12,15,22,.35) 45%, rgba(12,15,22,0) 75%); }
@@ -168,12 +185,18 @@ def build_index():
     cards = []
     for i, s in enumerate(studies):
         wide = " is-wide" if i == 0 else ""
+        cw, ch = img_size(s["cover"])
         cards.append(f"""            <a class="cs-card reveal{wide}" href="case-studies/{s['slug']}.html" style="transition-delay: {min(i, 8) * 60}ms">
-              <div class="cs-cover"><img src="{s['cover']}" alt="{html.escape(s['name'])} brand book" loading="{'eager' if i == 0 else 'lazy'}" width="1200" height="{900 if i == 0 else 900}" /></div>
+              <div class="cs-cover{' is-tall' if ch > cw else ''}"><img src="{s['cover']}" alt="{html.escape(s['name'])} brand book" loading="{'eager' if i == 0 else 'lazy'}" width="{cw}" height="{ch}" /></div>
               <span class="cs-tag">{html.escape(s['scope'])}</span>
               <div class="cs-meta"><div><h3>{html.escape(s['name'])}<sup>®</sup></h3><p>{html.escape(s['industry'])}</p></div><span class="arrow">→</span></div>
             </a>""")
     archive = "".join(f"<li>{html.escape(n)}</li>" for n in DATA.get("archive", []))
+    archive_block = f"""          <div class="cs-archive reveal">
+            <p class="eyebrow">More brand systems</p>
+            <ul>{archive}</ul>
+          </div>
+""" if archive else ""
     body = hero('From Logo to<br /><span style="display: block; font-size: clamp(48px, 15vw, 88px); color: #BAFF29; font-weight: 300; text-transform: none; margin-top: 8px;">Full Brand System.</span>', DATA["intro"], vh=45) + f"""    <main>
     <div class="main-content">
       <section class="section-padding">
@@ -181,11 +204,7 @@ def build_index():
           <div class="cs-grid">
 {chr(10).join(cards)}
           </div>
-          <div class="cs-archive reveal">
-            <p class="eyebrow">More brand systems</p>
-            <ul>{archive}</ul>
-          </div>
-          <div class="lets text-center" style="margin-top: 60px;">
+{archive_block}          <div class="lets text-center" style="margin-top: 60px;">
             <a href="contact.html" class="btn-curve btn-lit"><span>Start a project</span></a>
           </div>
         </div>
@@ -218,6 +237,12 @@ def build_study(s, prev, nxt):
         site = f'<div><dt>Website</dt><dd><a href="{s["url"]}" target="_blank" rel="noopener">{html.escape(label)}</a></dd></div>'
     else:
         site = f'<div><dt>Year</dt><dd>{html.escape(s.get("year", ""))}</dd></div>'
+    cw, ch = img_size(s["cover"])
+    closed = s["pages"] > 3
+    veil = f"""            <div class="cs-book-veil">
+              <button type="button" class="cs-open" id="cs-open"><span>Open the brand book</span><i>↓</i></button>
+              <p>{s['pages']} pages, page by page</p>
+            </div>""" if closed else ""
     pager = "" if prev is s else f"""          <div class="cs-pager reveal">
             <a href="{prev['slug']}.html"><div class="lab">← Previous</div><div class="nm">{html.escape(prev['name'])}</div></a>
             <a class="next" href="{nxt['slug']}.html"><div class="lab">Next →</div><div class="nm">{html.escape(nxt['name'])}</div></a>
@@ -226,14 +251,14 @@ def build_study(s, prev, nxt):
     <div class="main-content">
       <section class="section-padding cs-page">
         <div class="container">
-          <div class="cs-top"><a href="case-studies.html">← All case studies</a><span>{s['pages']} pages</span></div>
-          <a class="cs-hero" href="#book" id="cs-hero" aria-label="Open the {html.escape(s['name'])} brand book">
-            <img src="{s['cover']}" alt="{html.escape(s['name'])} brand identity" width="1200" height="840" fetchpriority="high" />
+          <div class="cs-top"><a href="case-studies.html">← All case studies</a><span>{str(s['pages']) + ' pages' if s['pages'] > 1 else html.escape(s['year'])}</span></div>
+          <a class="cs-hero{' is-tall' if ch > cw else ''}" href="#book" id="cs-hero" aria-label="Open the {html.escape(s['name'])} brand book">
+            <img src="{s['cover']}" alt="{html.escape(s['name'])} brand identity" width="{cw}" height="{ch}" fetchpriority="high" />
             <div class="cs-hero-cap">
               <p class="eyebrow">{html.escape(s['scope'])}</p>
               <h1>{html.escape(s['name'])}<sup>®</sup></h1>
               <p class="cs-hero-ind">{html.escape(s['industry'])}</p>
-              <span class="cs-hero-btn"><span>Open the brand book</span><i>↓</i></span>
+              <span class="cs-hero-btn"><span>{'Open the brand book' if closed else 'See the work'}</span><i>↓</i></span>
             </div>
           </a>
           <p class="cs-story reveal">{html.escape(s['description'])}</p>
@@ -243,14 +268,11 @@ def build_study(s, prev, nxt):
             <div><dt>Scope</dt><dd>{html.escape(s['scope'])}</dd></div>
             {site}
           </dl>
-          <div class="cs-book is-closed" id="book">
+          <div class="cs-book{' is-closed' if closed else ''}" id="book">
             <div class="cs-pages">
 {chr(10).join(pages)}
             </div>
-            <div class="cs-book-veil">
-              <button type="button" class="cs-open" id="cs-open"><span>Open the brand book</span><i>↓</i></button>
-              <p>{s['pages']} pages, page by page</p>
-            </div>
+{veil}
           </div>
 {pager}
           <div class="lets text-center reveal" style="margin-top: 60px;">
@@ -275,7 +297,7 @@ def build_study(s, prev, nxt):
       }}
       function go() {{ var y = book.getBoundingClientRect().top + window.pageYOffset - 24; window.scrollTo({{ top: y, behavior: reduce ? "auto" : "smooth" }}); }}
       hero.addEventListener("click", function (e) {{ e.preventDefault(); openBook(true); }});
-      btn.addEventListener("click", function () {{ openBook(false); }});
+      if (btn) btn.addEventListener("click", function () {{ openBook(false); }});
       if (location.hash === "#book") openBook(true);
       /* reveal on scroll */
       var items = document.querySelectorAll(".reveal, .cs-book figure");
@@ -294,9 +316,37 @@ def build_study(s, prev, nxt):
     open(os.path.join(ROOT, "case-studies", f"{s['slug']}.html"), "w", encoding="utf-8").write(out)
 
 
+def build_home_grid():
+    """Brand Systems tab on the home page portfolio: first six brand books + link to all."""
+    idx = os.path.join(ROOT, "index.html")
+    page_html = open(idx, encoding="utf-8").read()
+    start, end = "<!-- cs-home-grid:start -->", "<!-- cs-home-grid:end -->"
+    if start not in page_html or end not in page_html:
+        return
+    cards = []
+    for s in DATA["studies"][:6]:
+        cw, ch = img_size(s["cover"])
+        cards.append(f"""          <a class="cs-card" href="case-studies/{s['slug']}.html">
+            <div class="cs-cover{' is-tall' if ch > cw else ''}"><img src="{s['cover']}" alt="{html.escape(s['name'])} brand book" loading="lazy" width="{cw}" height="{ch}" /></div>
+            <span class="cs-tag">{html.escape(s['scope'])}</span>
+            <div class="cs-meta"><div><h3>{html.escape(s['name'])}<sup>®</sup></h3><p>{html.escape(s['industry'])}</p></div><span class="arrow">→</span></div>
+          </a>""")
+    block = f"""{start}
+        <div class="cs-grid">
+{chr(10).join(cards)}
+        </div>
+        <div class="text-center mt-40">
+          <a href="case-studies.html" class="butn butn-md butn-bord radius-30" style="margin: 6px;"><span>See all {len(DATA['studies'])} brand books</span></a>
+        </div>
+        {end}"""
+    i, j = page_html.index(start), page_html.index(end) + len(end)
+    open(idx, "w", encoding="utf-8").write(page_html[:i] + block + page_html[j:])
+
+
 if __name__ == "__main__":
     studies = DATA["studies"]
     build_index()
+    build_home_grid()
     for i, s in enumerate(studies):
         build_study(s, studies[i - 1], studies[(i + 1) % len(studies)])
     print("built case-studies.html +", len(studies), "case pages")

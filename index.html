@@ -279,6 +279,28 @@
     .gallery-3d-dots .dot.active { background: #BAFF29; transform: scale(1.3); }
     .gallery-3d-hint { text-align: center; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-weight: 300; color: rgba(255,255,255,.35); margin-bottom: 20px; }
     @media (max-width: 768px) { .gallery-3d { height: 360px; } }
+    /* portfolio tabs: Logos / Brand Systems */
+    .portfolio.show-systems .gallery-3d-wrap, .portfolio.show-systems .gallery { display: none !important; }
+    .brand-systems { padding: 10px 0 20px; }
+    .cs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 991px) { .cs-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 575px) { .cs-grid { grid-template-columns: 1fr; } }
+    .cs-card { position: relative; display: flex; flex-direction: column; background: #151921; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; color: #fff; transition: border-color .25s ease, transform .25s ease; min-width: 0; }
+    .cs-card:hover, .cs-card:focus-visible { border-color: rgba(186,255,41,.5); transform: translateY(-4px); color: #fff; text-decoration: none; outline: none; }
+    .cs-cover { aspect-ratio: 16 / 9; overflow: hidden; background: #11141b; max-width: 100%; }
+    .cs-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+    .cs-cover.is-tall img { object-position: center top; }
+    .cs-card:hover .cs-cover img { transform: scale(1.04); }
+    .cs-tag { position: absolute; top: 14px; left: 14px; background: rgba(12,15,22,.8); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 4px 12px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #BAFF29; }
+    .cs-meta { padding: 16px 18px 18px; display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; }
+    .cs-meta h3 { margin: 0; font-size: 17px; font-weight: 500; color: #fff; line-height: 1.3; }
+    .cs-meta h3 sup { font-size: .55em; font-weight: 300; }
+    .cs-meta p { margin: 4px 0 0; color: #9a9a9a; font-size: 13px; }
+    .cs-meta .arrow { color: #BAFF29; font-size: 22px; line-height: 1; flex: none; transition: transform .25s ease; }
+    .cs-card:hover .arrow { transform: translateX(4px); }
+    .brand-systems .cs-card { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1), border-color .25s ease; }
+    .brand-systems.in .cs-card { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .brand-systems .cs-card { transition: none; opacity: 1; transform: none; } }
     </style>
 
 </head>
@@ -310,10 +332,8 @@
           <li class="nav-item"><a class="nav-link" href="#about">about</a></li>
           <li class="nav-item"><a class="nav-link" href="#services">services</a></li>
           <li class="nav-item"><a class="nav-link" href="process.html">process</a></li>
-            <li class="nav-item"><a class="nav-link" href="case-studies.html">case studies</a></li>
           <li class="nav-item"><a class="nav-link" href="#portfolio">portfolio</a></li>
-          <li class="nav-item"><a class="nav-link" href="#testimonials">testimonials</a></li>
-          <li class="nav-item"><a class="nav-link" href="#press">press</a></li>
+          <li class="nav-item"><a class="nav-link" href="case-studies.html">case studies</a></li>
           <li>
             <a href="#contact" class="btn-curve btn-lit wow" data-wow-delay=".5s" style="text-align: center;">
               <span>Contact</span>
@@ -534,16 +554,54 @@
     </div>
     <div class="container">
       <div class="filtering col-12">
-        <div class="filter wow fadeIn" data-wow-delay=".5s">
-          <span data-filter="*" class="active">All</span>
-          <span data-filter=".mono">Monochrome</span>
-          <span data-filter=".color">Colorful</span>
+        <div class="filter wow fadeIn" data-wow-delay=".5s" role="tablist">
+          <span data-filter="*" data-tab="logos" class="active" role="tab">Logos</span>
+          <span data-filter="*" data-tab="systems" role="tab">Brand Systems</span>
         </div>
       </div>
       <div class="gallery-3d-wrap">
         <div id="gallery-3d" class="gallery-3d" tabindex="0" role="region" aria-label="Portfolio. Drag or use arrow keys to browse."></div>
         <div class="gallery-3d-dots" aria-hidden="true"></div>
         <p class="gallery-3d-hint">drag to browse</p>
+      </div>
+      <div class="brand-systems" id="brand-systems" hidden>
+        <!-- cs-home-grid:start -->
+        <div class="cs-grid">
+          <a class="cs-card" href="case-studies/spaces.html">
+            <div class="cs-cover"><img src="img/case-studies/spaces/cover.webp" alt="SPACES brand book" loading="lazy" width="1200" height="840" /></div>
+            <span class="cs-tag">Brand Identity System</span>
+            <div class="cs-meta"><div><h3>SPACES<sup>®</sup></h3><p>Energy / Logistics / Property</p></div><span class="arrow">→</span></div>
+          </a>
+          <a class="cs-card" href="case-studies/globestar.html">
+            <div class="cs-cover"><img src="img/case-studies/globestar/globestar-01.webp" alt="GLOBESTAR Express brand book" loading="lazy" width="1600" height="900" /></div>
+            <span class="cs-tag">Brand Identity System</span>
+            <div class="cs-meta"><div><h3>GLOBESTAR Express<sup>®</sup></h3><p>Transportation / Logistics</p></div><span class="arrow">→</span></div>
+          </a>
+          <a class="cs-card" href="case-studies/ipetstar.html">
+            <div class="cs-cover"><img src="img/case-studies/ipetstar/ipetstar-01.webp" alt="iPetStar brand book" loading="lazy" width="1600" height="900" /></div>
+            <span class="cs-tag">Brand Identity System</span>
+            <div class="cs-meta"><div><h3>iPetStar<sup>®</sup></h3><p>Pet Services / Digital Platform</p></div><span class="arrow">→</span></div>
+          </a>
+          <a class="cs-card" href="case-studies/microapp.html">
+            <div class="cs-cover"><img src="img/case-studies/microapp/microapp-01.webp" alt="Microapp.io brand book" loading="lazy" width="1600" height="900" /></div>
+            <span class="cs-tag">Brand Identity System</span>
+            <div class="cs-meta"><div><h3>Microapp.io<sup>®</sup></h3><p>Tech / SaaS Platform</p></div><span class="arrow">→</span></div>
+          </a>
+          <a class="cs-card" href="case-studies/qfl.html">
+            <div class="cs-cover"><img src="img/case-studies/qfl/qfl-01.webp" alt="QFL brand book" loading="lazy" width="1600" height="1132" /></div>
+            <span class="cs-tag">Brand Identity System</span>
+            <div class="cs-meta"><div><h3>QFL<sup>®</sup></h3><p>Qazaqstan Football League · Broadcast TV Experience</p></div><span class="arrow">→</span></div>
+          </a>
+          <a class="cs-card" href="case-studies/uk-smiles.html">
+            <div class="cs-cover"><img src="img/case-studies/uk-smiles/uk-smiles-01.webp" alt="UK smiles brand book" loading="lazy" width="1600" height="900" /></div>
+            <span class="cs-tag">Brand Identity System</span>
+            <div class="cs-meta"><div><h3>UK smiles<sup>®</sup></h3><p>Dental Centre</p></div><span class="arrow">→</span></div>
+          </a>
+        </div>
+        <div class="text-center mt-40">
+          <a href="case-studies.html" class="butn butn-md butn-bord radius-30" style="margin: 6px;"><span>See all 21 brand books</span></a>
+        </div>
+        <!-- cs-home-grid:end -->
       </div>
       <div class="gallery full-width row">
         <div class="col-md-4 items color wow fadeInUp" style="margin-bottom: 30px; padding: 15px;">
@@ -776,6 +834,22 @@
       }, { threshold: 0.18 });
       els.forEach(function (e) { io.observe(e); });
     })(window, document);
+  </script>
+  <script>
+    /* Portfolio tabs: Logos (coverflow) / Brand Systems (brand book cards). Works before the site JS loads. */
+    (function () {
+      var sec = document.getElementById("portfolio"), box = document.getElementById("brand-systems");
+      if (!sec || !box) return;
+      sec.querySelectorAll(".filtering span[data-tab]").forEach(function (sp) {
+        sp.addEventListener("click", function () {
+          var systems = sp.getAttribute("data-tab") === "systems";
+          sec.classList.toggle("show-systems", systems);
+          box.hidden = !systems;
+          box.classList.remove("in");
+          if (systems) { box.querySelectorAll(".cs-card").forEach(function (c, i) { c.style.transitionDelay = (i * 60) + "ms"; }); window.requestAnimationFrame(function () { box.classList.add("in"); }); }
+        });
+      });
+    })();
   </script>
   <script>
     /* Mobile menu works at once, before jQuery and Bootstrap load. */
