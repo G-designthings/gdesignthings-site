@@ -1021,7 +1021,7 @@
       function load() {
         if (done) return; done = true;
         ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.removeEventListener(e, load); });
-        add("js/three.min.js?v=r128d", function () { add("js/scenes-3d.js?v=8"); });
+        add("js/three.min.js?v=r128d", function () { add("js/scenes-3d.js?v=9"); });
       }
       ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.addEventListener(e, load, { passive: true }); });
       /* no automatic start: real visitors move, scroll or tap within a second; lab tools never do, so they measure the plain page */

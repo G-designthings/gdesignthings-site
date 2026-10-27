@@ -400,12 +400,13 @@
       var flow = img.getAttribute("data-flow") || img.getAttribute("src");
       items.push({ large: flow, small: flow, alt: img.getAttribute("alt") || "", url: a.getAttribute("href"), cat: "sys" });
     });
+    items = items.slice(0, Math.max(works.length, 6));   /* keep it browsable: as many books as there are logos */
     systemsBuilt = buildFlow({
       section: section,
       stage: stage,
       dotsEl: d.querySelector("#systems-3d-wrap .gallery-3d-dots"),
       items: items,
-      planeW: 4.8, planeH: 2.7, sp: 5.2,
+      planeW: 5.3, planeH: 2.98, sp: 5.7,
       camZ: 12, camZMobile: 10.4,
       readyClass: "is-3d-sys",
       mask: makeMask(16 / 9),
