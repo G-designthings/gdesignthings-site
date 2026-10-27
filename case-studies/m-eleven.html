@@ -119,18 +119,22 @@
       .cs-hero img { width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover; object-position: center; display: block; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
       .cs-hero.is-tall img, .cs-cover.is-tall img { object-position: center top; }
       .cs-book.is-single .cs-pages { max-width: 760px; margin: 0 auto; }
-      .cs-zoom { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; font: inherit; }
-      .cs-zoom:focus-visible { outline: 2px solid #BAFF29; outline-offset: -2px; }
-      .cs-lightbox { position: fixed; inset: 0; z-index: 9999; background: rgba(8,10,14,.96); display: flex; align-items: center; justify-content: center; padding: 56px 64px; cursor: zoom-out; }
+      .cs-lightbox { position: fixed; inset: 0; z-index: 9999; background: #0c0f16; display: flex; flex-direction: column; }
       .cs-lightbox[hidden] { display: none; }
-      .cs-lightbox img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 4px; cursor: default; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
-      .cs-lightbox button { position: absolute; border: 1px solid rgba(255,255,255,.2); background: rgba(12,15,22,.7); color: #fff; width: 44px; height: 44px; border-radius: 50%; font-size: 26px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: border-color .2s, color .2s; font-family: inherit; }
+      .cs-lb-top { display: flex; align-items: center; gap: 14px; padding: 14px 18px; flex: none; }
+      .cs-lb-title { font-weight: 500; color: #fff; font-size: 15px; }
+      .cs-lb-title sup { font-size: .55em; font-weight: 300; color: #BAFF29; }
+      .cs-lb-count { margin-left: auto; font-size: 12px; letter-spacing: 2px; color: #9a9a9a; font-variant-numeric: tabular-nums; }
+      .cs-lb-stage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 8px 72px 8px; overflow: auto; cursor: zoom-out; }
+      .cs-lb-stage img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 4px; cursor: zoom-in; box-shadow: 0 20px 60px rgba(0,0,0,.5); display: block; transition: none; }
+      .cs-lightbox.is-zoomed .cs-lb-stage { display: block; cursor: default; }
+      .cs-lightbox.is-zoomed .cs-lb-stage img { max-width: none; max-height: none; width: 160%; margin: 0 auto; cursor: zoom-out; }
+      .cs-lightbox button { border: 1px solid rgba(255,255,255,.2); background: rgba(12,15,22,.7); color: #fff; width: 44px; height: 44px; border-radius: 50%; font-size: 26px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: border-color .2s, color .2s; font-family: inherit; flex: none; padding: 0; }
       .cs-lightbox button:hover, .cs-lightbox button:focus-visible { border-color: #BAFF29; color: #BAFF29; outline: none; }
-      .cs-lb-close { top: 16px; right: 16px; }
-      .cs-lb-prev { left: 12px; top: 50%; transform: translateY(-50%); }
-      .cs-lb-next { right: 12px; top: 50%; transform: translateY(-50%); }
-      .cs-lb-count { position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; margin: 0; font-size: 12px; letter-spacing: 2px; color: #9a9a9a; }
-      @media (max-width: 767px) { .cs-lightbox { padding: 60px 8px; } .cs-lb-prev, .cs-lb-next { display: none; } }
+      .cs-lightbox .cs-lb-prev, .cs-lightbox .cs-lb-next { position: absolute; top: 50%; transform: translateY(-50%); }
+      .cs-lightbox .cs-lb-prev { left: 14px; } .cs-lightbox .cs-lb-next { right: 14px; }
+      .cs-lb-hint { flex: none; margin: 0; padding: 10px 16px 14px; text-align: center; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6f6f; }
+      @media (max-width: 767px) { .cs-lb-stage { padding: 6px 8px; } .cs-lightbox .cs-lb-prev, .cs-lightbox .cs-lb-next { display: none; } .cs-lb-hint { font-size: 10px; letter-spacing: 1.5px; } .cs-lightbox.is-zoomed .cs-lb-stage img { width: 220%; } }
       body.cs-lb-open { overflow: hidden; }
       @media (max-width: 767px) { .cs-hero img { aspect-ratio: 3 / 4; } .cs-hero::after { background: linear-gradient(to top, rgba(12,15,22,.96) 0%, rgba(12,15,22,.6) 45%, rgba(12,15,22,.05) 75%); } }
       .cs-hero:hover img { transform: scale(1.03); }
@@ -145,26 +149,14 @@
       .cs-hero-btn i, .cs-open i { font-style: normal; transition: transform .4s ease; }
       .cs-hero:hover .cs-hero-btn, .cs-open:hover, .cs-open:focus-visible { background: #BAFF29; border-color: #BAFF29; color: #0c0f16; outline: none; }
       .cs-hero:hover .cs-hero-btn i, .cs-open:hover i { transform: translateY(3px); }
-      .cs-book { position: relative; scroll-margin-top: 24px; }
-      .cs-pages { display: grid; gap: 6px; }
-      .cs-book figure { margin: 0; background: #151921; border-radius: 4px; overflow: hidden; opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
-      .cs-book figure.in { opacity: 1; transform: none; }
-      .cs-book.is-closed .cs-pages { max-height: 520px; overflow: hidden; }
-      @media (max-width: 767px) { .cs-book.is-closed .cs-pages { max-height: 300px; } }
-      .cs-book.is-closed figure { opacity: 1; transform: none; }
-      .cs-book-veil { position: absolute; left: 0; right: 0; bottom: 0; height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 12px; padding-bottom: 28px; background: linear-gradient(to bottom, rgba(12,15,22,0) 0%, rgba(12,15,22,.85) 55%, #0c0f16 100%); transition: opacity .5s ease; }
-      .cs-book-veil p { margin: 0; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #9a9a9a; }
-      .cs-book:not(.is-closed) .cs-book-veil { opacity: 0; pointer-events: none; }
-
-      .cs-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: #9a9a9a; margin-bottom: 40px; }
-      .cs-top a { color: #9a9a9a; } .cs-top a:hover { color: #BAFF29; text-decoration: none; }
       .cs-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 32px; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 24px 0; margin: 36px 0; }
       @media (max-width: 767px) { .cs-facts { grid-template-columns: 1fr 1fr; } }
       .cs-facts dt { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #9a9a9a; font-weight: 400; }
       .cs-facts dd { margin: 4px 0 0; color: #fff; font-weight: 500; font-size: 15px; }
       .cs-facts dd a { color: #BAFF29; }
       .cs-story { max-width: 720px; font-size: 17px; line-height: 1.75; color: #d6d6d6; margin: 0 0 48px; }
-      .cs-book img { width: 100%; height: auto; display: block; }
+      .cs-open-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin: 0 0 8px; }
+      .cs-open-row p { margin: 0; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #9a9a9a; }
       .cs-pager { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 36px; margin-top: 56px; }
       .cs-pager a { display: block; color: #fff; } .cs-pager a:hover { text-decoration: none; }
       .cs-pager .lab { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #9a9a9a; }
@@ -217,13 +209,13 @@
       <section class="section-padding cs-page">
         <div class="container">
           <div class="cs-top"><a href="../case-studies.html">← All case studies</a><span>2025</span></div>
-          <a class="cs-hero is-tall" href="#book" id="cs-hero" aria-label="Open the m/eleven brand book">
+          <a class="cs-hero is-tall" href="#book" id="cs-hero" aria-label="See the work: m/eleven">
             <img src="../img/case-studies/m-eleven/m-eleven-01.webp" alt="m/eleven brand identity" width="857" height="1600" fetchpriority="high" />
             <div class="cs-hero-cap">
               <p class="eyebrow">Logo Design</p>
               <h1>m/eleven<sup>®</sup></h1>
               <p class="cs-hero-ind">Photographer, Visual Artist</p>
-              <span class="cs-hero-btn"><span>See the work</span><i>↓</i></span>
+              <span class="cs-hero-btn"><span>See the work</span><i>↗</i></span>
             </div>
           </a>
           <p class="cs-story reveal">m/eleven is a visual studio focused on photography, video and storytelling. The identity translates their personal story into a minimal, timeless mark built around the m and 11.</p>
@@ -233,11 +225,9 @@
             <div><dt>Scope</dt><dd>Logo Design</dd></div>
             <div><dt>Website</dt><dd><a href="https://www.instagram.com/m11_studios/" target="_blank" rel="noopener">instagram.com/m11_studios</a></dd></div>
           </dl>
-          <div class="cs-book" id="book">
-            <div class="cs-pages">
-            <figure><button type="button" class="cs-zoom" data-src="../img/case-studies/m-eleven/m-eleven-01.webp" aria-label="Zoom page 1"><img src="../img/case-studies/m-eleven/m-eleven-01.webp" alt="m/eleven brand guidelines, page 1" loading="eager" decoding="async" width="857" height="1600" /></button></figure>
-            </div>
-
+          <div class="cs-open-row reveal">
+            <button type="button" class="cs-open" id="cs-open"><span>See the work</span><i>↗</i></button>
+            <p>1 page · full screen · arrows or swipe to browse · click a page to zoom</p>
           </div>
           <div class="cs-pager reveal">
             <a href="cortado.html"><div class="lab">← Previous</div><div class="nm">Cortado</div></a>
@@ -251,52 +241,71 @@
       </section>
     </div>
     </main>
-    <div class="cs-lightbox" id="cs-lightbox" hidden>
-      <button type="button" class="cs-lb-close" id="cs-lb-close" aria-label="Close">×</button>
+    <div class="cs-lightbox" id="cs-lightbox" hidden role="dialog" aria-label="m/eleven brand book">
+      <div class="cs-lb-top">
+        <span class="cs-lb-title">m/eleven<sup>®</sup></span>
+        <span class="cs-lb-count" id="cs-lb-count"></span>
+        <button type="button" class="cs-lb-zoom" id="cs-lb-zoom" aria-label="Zoom">+</button>
+        <button type="button" class="cs-lb-close" id="cs-lb-close" aria-label="Close and go back to all case studies">×</button>
+      </div>
       <button type="button" class="cs-lb-prev" id="cs-lb-prev" aria-label="Previous page">‹</button>
-      <img id="cs-lb-img" src="" alt="" />
+      <div class="cs-lb-stage" id="cs-lb-stage"><img id="cs-lb-img" src="" alt="" /></div>
       <button type="button" class="cs-lb-next" id="cs-lb-next" aria-label="Next page">›</button>
-      <p class="cs-lb-count" id="cs-lb-count"></p>
+      <p class="cs-lb-hint">Click outside the page to go back to all case studies</p>
     </div>
     <script>
-    /* Brand book: closed preview, opens on click (hero or button); pages and blocks fade up as they enter the viewport. */
+    /* Case study: hero and button open the brand book as a full screen viewer. Closing it goes back to the case studies list. */
     (function () {
-      var book = document.getElementById("book"), hero = document.getElementById("cs-hero"), btn = document.getElementById("cs-open");
+      var PAGES = ["../img/case-studies/m-eleven/m-eleven-01.webp"];
+      var hero = document.getElementById("cs-hero"), btn = document.getElementById("cs-open");
+      var lb = document.getElementById("cs-lightbox"), stage = document.getElementById("cs-lb-stage"), img = document.getElementById("cs-lb-img"), count = document.getElementById("cs-lb-count"), zoomBtn = document.getElementById("cs-lb-zoom");
       var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      function openBook(scroll) {
-        if (!book.classList.contains("is-closed")) { if (scroll) go(); return; }
-        book.classList.remove("is-closed");
-        book.querySelectorAll("figure").forEach(function (f, i) { if (i < 6) f.style.transitionDelay = (i * 70) + "ms"; });
-        if (scroll) go();
-        window.setTimeout(function () { book.querySelectorAll("figure").forEach(function (f) { f.style.transitionDelay = ""; }); }, 1200);
+      var cur = 0, zoomed = false, loaded = {};
+      function preload(i) { var k = (i + PAGES.length) % PAGES.length; if (!loaded[k]) { loaded[k] = true; var im = new Image(); im.src = PAGES[k]; } }
+      function show(i) {
+        cur = (i + PAGES.length) % PAGES.length;
+        img.src = PAGES[cur]; img.alt = "Page " + (cur + 1);
+        count.textContent = (cur + 1) + " / " + PAGES.length;
+        setZoom(false); preload(cur + 1); preload(cur + 2); preload(cur - 1);
       }
-      function go() { var y = book.getBoundingClientRect().top + window.pageYOffset - 24; window.scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" }); }
-      hero.addEventListener("click", function (e) { e.preventDefault(); openBook(true); });
-      if (btn) btn.addEventListener("click", function () { openBook(false); });
-      if (location.hash === "#book") openBook(true);
-      /* reveal on scroll */
-      var items = document.querySelectorAll(".reveal, .cs-book figure");
-      if (reduce || !("IntersectionObserver" in window)) { items.forEach(function (el) { el.classList.add("in"); }); return; }
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
-      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
-      items.forEach(function (el) { io.observe(el); });
-      /* hero: show at once */
-      window.requestAnimationFrame(function () { hero.classList.add("in"); });
-      /* zoom: click a page to open it full screen; arrows and keys move between pages */
-      var lb = document.getElementById("cs-lightbox"), lbImg = document.getElementById("cs-lb-img"), lbCount = document.getElementById("cs-lb-count");
-      var zooms = Array.prototype.slice.call(document.querySelectorAll(".cs-zoom")), cur = 0;
-      function show(i) { cur = (i + zooms.length) % zooms.length; lbImg.src = zooms[cur].getAttribute("data-src"); lbImg.alt = zooms[cur].querySelector("img").alt; lbCount.textContent = (cur + 1) + " / " + zooms.length; }
-      function openLb(i) { show(i); lb.hidden = false; document.body.classList.add("cs-lb-open"); }
-      function closeLb() { lb.hidden = true; document.body.classList.remove("cs-lb-open"); }
-      zooms.forEach(function (z, i) { z.addEventListener("click", function () { openLb(i); }); });
-      document.getElementById("cs-lb-close").addEventListener("click", closeLb);
+      function setZoom(on) { zoomed = on; lb.classList.toggle("is-zoomed", on); zoomBtn.textContent = on ? "−" : "+"; zoomBtn.setAttribute("aria-label", on ? "Zoom out" : "Zoom in"); if (!on) stage.scrollTo(0, 0); }
+      function openViewer(i) { show(i || 0); lb.hidden = false; document.body.classList.add("cs-lb-open"); if (history.replaceState) history.replaceState(null, "", "#book"); }
+      function closeViewer() { lb.hidden = true; document.body.classList.remove("cs-lb-open"); window.location.href = "../case-studies.html"; }
+      hero.addEventListener("click", function (e) { e.preventDefault(); openViewer(0); });
+      btn.addEventListener("click", function () { openViewer(0); });
+      document.getElementById("cs-lb-close").addEventListener("click", closeViewer);
       document.getElementById("cs-lb-prev").addEventListener("click", function () { show(cur - 1); });
       document.getElementById("cs-lb-next").addEventListener("click", function () { show(cur + 1); });
-      lb.addEventListener("click", function (e) { if (e.target === lb) closeLb(); });
-      document.addEventListener("keydown", function (e) { if (lb.hidden) return; if (e.key === "Escape") closeLb(); if (e.key === "ArrowRight") show(cur + 1); if (e.key === "ArrowLeft") show(cur - 1); });
-      var tx = null; lb.addEventListener("touchstart", function (e) { tx = e.touches[0].clientX; }, { passive: true });
-      lb.addEventListener("touchend", function (e) { if (tx === null) return; var dx = e.changedTouches[0].clientX - tx; tx = null; if (dx > 50) show(cur - 1); if (dx < -50) show(cur + 1); });
+      zoomBtn.addEventListener("click", function () { setZoom(!zoomed); });
+      img.addEventListener("click", function (e) { e.stopPropagation(); setZoom(!zoomed); });
+      stage.addEventListener("click", function (e) { if (e.target === stage) closeViewer(); });
+      lb.addEventListener("click", function (e) { if (e.target === lb) closeViewer(); });
+      document.addEventListener("keydown", function (e) {
+        if (lb.hidden) return;
+        if (e.key === "Escape") closeViewer();
+        else if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); show(cur + 1); }
+        else if (e.key === "ArrowLeft") show(cur - 1);
+        else if (e.key === "+" || e.key === "=") setZoom(true);
+        else if (e.key === "-") setZoom(false);
+      });
+      var tx = null, ty = null;
+      stage.addEventListener("touchstart", function (e) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+      stage.addEventListener("touchend", function (e) {
+        if (tx === null || zoomed) return;
+        var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; tx = ty = null;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(dx < 0 ? cur + 1 : cur - 1);
+      });
+      if (location.hash === "#book") openViewer(0);
+      /* reveal on scroll */
+      var items = document.querySelectorAll(".reveal");
+      if (reduce || !("IntersectionObserver" in window)) { items.forEach(function (el) { el.classList.add("in"); }); }
+      else {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+        }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+        items.forEach(function (el) { io.observe(el); });
+      }
+      window.requestAnimationFrame(function () { hero.classList.add("in"); });
     })();
     </script>
 
