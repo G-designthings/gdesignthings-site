@@ -30,6 +30,24 @@ def img_size(rel, default=(1200, 900)):
         return default
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def derive(rel, name, width):
+    """A smaller copy of a cover (thumb/flow), rebuilt when the cover changes."""
+    if Image is None:
+        return rel
+    src = os.path.join(ROOT, rel)
+    out_rel = os.path.join(os.path.dirname(rel), name + ".webp")
+    out = os.path.join(ROOT, out_rel)
+    try:
+        if not os.path.exists(out) or os.path.getmtime(out) < os.path.getmtime(src):
+            with Image.open(src) as im:
+                if im.width > width:
+                    im = im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
+                im.save(out, "WEBP", quality=82)
+        return out_rel
+    except Exception:
+        return rel
 TPL = open(os.path.join(ROOT, "process.html"), encoding="utf-8").read()
 DATA = json.load(open(os.path.join(ROOT, "case-studies", "case-studies.json"), encoding="utf-8"))
 
@@ -100,7 +118,10 @@ CSS = """
       .reveal.in { opacity: 1; transform: none; }
       @media (prefers-reduced-motion: reduce) { .reveal, .cs-book figure, .cs-hero img, .cs-hero-btn i { transition: none !important; transform: none !important; opacity: 1 !important; } }
       /* single case study */
-      .cs-page { padding-top: 110px; }
+      .cs-page { padding-top: 130px; }
+      .cs-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin: 0 0 28px; font-size: 14px; }
+      .cs-top a { color: #fff; font-weight: 500; transition: color .2s ease; } .cs-top a:hover { color: #BAFF29; text-decoration: none; }
+      .cs-top span { color: #9a9a9a; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
       .cs-hero { position: relative; display: block; border-radius: 6px; overflow: hidden; background: #151921; margin: 0 0 48px; color: #fff; opacity: 0; transform: translateY(14px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
       .cs-hero.in { opacity: 1; transform: none; }
       .cs-hero:hover, .cs-hero:focus-visible { color: #fff; text-decoration: none; outline: none; }
@@ -192,9 +213,10 @@ def build_index():
     cards = []
     for i, s in enumerate(studies):
         wide = " is-wide" if i == 0 else ""
-        cw, ch = img_size(s["cover"])
+        cover = derive(s["cover"], "thumb", 1200)
+        cw, ch = img_size(cover)
         cards.append(f"""            <a class="cs-card reveal{wide}" href="case-studies/{s['slug']}.html" style="transition-delay: {min(i, 8) * 60}ms">
-              <div class="cs-cover{' is-tall' if ch > cw else ''}"><img src="{s['cover']}" alt="{html.escape(s['name'])} brand book" loading="{'eager' if i == 0 else 'lazy'}" width="{cw}" height="{ch}" /></div>
+              <div class="cs-cover{' is-tall' if ch > cw else ''}"><img src="{cover}" alt="{html.escape(s['name'])} brand book" loading="{'eager' if i == 0 else 'lazy'}" width="{cw}" height="{ch}" /></div>
               <span class="cs-tag">{html.escape(s['scope'])}</span>
               <div class="cs-meta"><div><h3>{html.escape(s['name'])}<sup>®</sup></h3><p>{html.escape(s['industry'])}</p></div><span class="arrow">→</span></div>
             </a>""")
@@ -376,10 +398,12 @@ def build_home_grid():
     if start not in page_html or end not in page_html:
         return
     cards = []
-    for s in DATA["studies"][:6]:
-        cw, ch = img_size(s["cover"])
+    for s in DATA["studies"]:
+        cover = derive(s["cover"], "thumb", 1200)
+        flow = derive(s["cover"], "flow", 800)
+        cw, ch = img_size(cover)
         cards.append(f"""          <a class="cs-card" href="case-studies/{s['slug']}.html">
-            <div class="cs-cover{' is-tall' if ch > cw else ''}"><img src="{s['cover']}" alt="{html.escape(s['name'])} brand book" loading="lazy" width="{cw}" height="{ch}" /></div>
+            <div class="cs-cover{' is-tall' if ch > cw else ''}"><img src="{cover}" data-flow="{flow}" alt="{html.escape(s['name'])} brand book" loading="lazy" width="{cw}" height="{ch}" /></div>
             <span class="cs-tag">{html.escape(s['scope'])}</span>
             <div class="cs-meta"><div><h3>{html.escape(s['name'])}<sup>®</sup></h3><p>{html.escape(s['industry'])}</p></div><span class="arrow">→</span></div>
           </a>""")
