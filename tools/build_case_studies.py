@@ -78,7 +78,40 @@ CSS = """
       .cs-archive p.eyebrow { margin-bottom: 14px; }
       .cs-archive ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
       .cs-archive li { border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 6px 14px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #9a9a9a; }
+      /* reveal on scroll */
+      .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+      .reveal.in { opacity: 1; transform: none; }
+      @media (prefers-reduced-motion: reduce) { .reveal, .cs-book figure, .cs-hero img, .cs-hero-btn i { transition: none !important; transform: none !important; opacity: 1 !important; } }
       /* single case study */
+      .cs-page { padding-top: 110px; }
+      .cs-hero { position: relative; display: block; border-radius: 6px; overflow: hidden; background: #151921; margin: 0 0 48px; color: #fff; opacity: 0; transform: translateY(14px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+      .cs-hero.in { opacity: 1; transform: none; }
+      .cs-hero:hover, .cs-hero:focus-visible { color: #fff; text-decoration: none; outline: none; }
+      .cs-hero img { width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover; object-position: center; display: block; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+      @media (max-width: 767px) { .cs-hero img { aspect-ratio: 3 / 4; } .cs-hero::after { background: linear-gradient(to top, rgba(12,15,22,.96) 0%, rgba(12,15,22,.6) 45%, rgba(12,15,22,.05) 75%); } }
+      .cs-hero:hover img { transform: scale(1.03); }
+      .cs-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(12,15,22,.92) 0%, rgba(12,15,22,.35) 45%, rgba(12,15,22,0) 75%); }
+      .cs-hero-cap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 36px 40px; }
+      @media (max-width: 767px) { .cs-hero-cap { padding: 22px 20px; } }
+      .cs-hero-cap p.eyebrow { margin-bottom: 8px; }
+      .cs-hero-cap h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 500; letter-spacing: -1px; line-height: 1.05; margin: 0 0 6px; color: #fff; }
+      .cs-hero-cap h1 sup { font-size: .35em; font-weight: 300; color: #BAFF29; vertical-align: top; line-height: 1; }
+      .cs-hero-ind { color: #c8c8c8; font-size: 15px; margin: 0 0 18px; }
+      .cs-hero-btn, .cs-open { display: inline-flex; align-items: center; gap: 12px; border: 1px solid #fff; border-radius: 30px; padding: 12px 26px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; color: #fff; background: transparent; font-family: inherit; cursor: pointer; transition: background .25s ease, color .25s ease, border-color .25s ease; }
+      .cs-hero-btn i, .cs-open i { font-style: normal; transition: transform .4s ease; }
+      .cs-hero:hover .cs-hero-btn, .cs-open:hover, .cs-open:focus-visible { background: #BAFF29; border-color: #BAFF29; color: #0c0f16; outline: none; }
+      .cs-hero:hover .cs-hero-btn i, .cs-open:hover i { transform: translateY(3px); }
+      .cs-book { position: relative; scroll-margin-top: 24px; }
+      .cs-pages { display: grid; gap: 6px; }
+      .cs-book figure { margin: 0; background: #151921; border-radius: 4px; overflow: hidden; opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+      .cs-book figure.in { opacity: 1; transform: none; }
+      .cs-book.is-closed .cs-pages { max-height: 520px; overflow: hidden; }
+      @media (max-width: 767px) { .cs-book.is-closed .cs-pages { max-height: 300px; } }
+      .cs-book.is-closed figure { opacity: 1; transform: none; }
+      .cs-book-veil { position: absolute; left: 0; right: 0; bottom: 0; height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 12px; padding-bottom: 28px; background: linear-gradient(to bottom, rgba(12,15,22,0) 0%, rgba(12,15,22,.85) 55%, #0c0f16 100%); transition: opacity .5s ease; }
+      .cs-book-veil p { margin: 0; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #9a9a9a; }
+      .cs-book:not(.is-closed) .cs-book-veil { opacity: 0; pointer-events: none; }
+
       .cs-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: #9a9a9a; margin-bottom: 40px; }
       .cs-top a { color: #9a9a9a; } .cs-top a:hover { color: #BAFF29; text-decoration: none; }
       .cs-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 32px; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 24px 0; margin: 36px 0; }
@@ -87,8 +120,6 @@ CSS = """
       .cs-facts dd { margin: 4px 0 0; color: #fff; font-weight: 500; font-size: 15px; }
       .cs-facts dd a { color: #BAFF29; }
       .cs-story { max-width: 720px; font-size: 17px; line-height: 1.75; color: #d6d6d6; margin: 0 0 48px; }
-      .cs-book { display: grid; gap: 6px; }
-      .cs-book figure { margin: 0; background: #151921; border-radius: 4px; overflow: hidden; }
       .cs-book img { width: 100%; height: auto; display: block; }
       .cs-pager { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 36px; margin-top: 56px; }
       .cs-pager a { display: block; color: #fff; } .cs-pager a:hover { text-decoration: none; }
@@ -137,7 +168,7 @@ def build_index():
     cards = []
     for i, s in enumerate(studies):
         wide = " is-wide" if i == 0 else ""
-        cards.append(f"""            <a class="cs-card{wide}" href="case-studies/{s['slug']}.html">
+        cards.append(f"""            <a class="cs-card reveal{wide}" href="case-studies/{s['slug']}.html" style="transition-delay: {min(i, 8) * 60}ms">
               <div class="cs-cover"><img src="{s['cover']}" alt="{html.escape(s['name'])} brand book" loading="{'eager' if i == 0 else 'lazy'}" width="1200" height="{900 if i == 0 else 900}" /></div>
               <span class="cs-tag">{html.escape(s['scope'])}</span>
               <div class="cs-meta"><div><h3>{html.escape(s['name'])}<sup>®</sup></h3><p>{html.escape(s['industry'])}</p></div><span class="arrow">→</span></div>
@@ -150,7 +181,7 @@ def build_index():
           <div class="cs-grid">
 {chr(10).join(cards)}
           </div>
-          <div class="cs-archive">
+          <div class="cs-archive reveal">
             <p class="eyebrow">More brand systems</p>
             <ul>{archive}</ul>
           </div>
@@ -160,7 +191,18 @@ def build_index():
         </div>
       </section>
     </div>
-    </main>"""
+    </main>
+    <script>
+    (function () {{
+      var items = document.querySelectorAll(".reveal");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce || !("IntersectionObserver" in window)) {{ items.forEach(function (el) {{ el.classList.add("in"); }}); return; }}
+      var io = new IntersectionObserver(function (entries) {{
+        entries.forEach(function (en) {{ if (en.isIntersecting) {{ en.target.classList.add("in"); io.unobserve(en.target); }} }});
+      }}, {{ rootMargin: "0px 0px -8% 0px", threshold: 0.05 }});
+      items.forEach(function (el) {{ io.observe(el); }});
+    }})();
+    </script>"""
     out = page("Brand Case Studies | G.designthings", "Brand books by G.designthings. Scroll through the brand identity systems built for clients worldwide, page by page.", "https://www.gdesignthings.com/case-studies.html", body, 0, "case-studies")
     open(os.path.join(ROOT, "case-studies.html"), "w", encoding="utf-8").write(out)
 
@@ -176,33 +218,76 @@ def build_study(s, prev, nxt):
         site = f'<div><dt>Website</dt><dd><a href="{s["url"]}" target="_blank" rel="noopener">{html.escape(label)}</a></dd></div>'
     else:
         site = f'<div><dt>Year</dt><dd>{html.escape(s.get("year", ""))}</dd></div>'
-    body = hero(f'{html.escape(s["name"])}<sup style="font-size:.4em;font-weight:300;color:#BAFF29;vertical-align:top;line-height:1">®</sup><br /><span style="display: block; font-size: clamp(28px, 6vw, 44px); color: #BAFF29; font-weight: 300; text-transform: none; margin-top: 8px;">{html.escape(s["scope"])}.</span>', s["industry"], vh=30) + f"""    <main>
+    pager = "" if prev is s else f"""          <div class="cs-pager reveal">
+            <a href="{prev['slug']}.html"><div class="lab">← Previous</div><div class="nm">{html.escape(prev['name'])}</div></a>
+            <a class="next" href="{nxt['slug']}.html"><div class="lab">Next →</div><div class="nm">{html.escape(nxt['name'])}</div></a>
+          </div>"""
+    body = f"""    <main>
     <div class="main-content">
-      <section class="section-padding">
+      <section class="section-padding cs-page">
         <div class="container">
           <div class="cs-top"><a href="case-studies.html">← All case studies</a><span>{s['pages']} pages</span></div>
-          <p class="cs-story">{html.escape(s['description'])}</p>
-          <dl class="cs-facts">
+          <a class="cs-hero" href="#book" id="cs-hero" aria-label="Open the {html.escape(s['name'])} brand book">
+            <img src="{s['cover']}" alt="{html.escape(s['name'])} brand identity" width="1200" height="840" fetchpriority="high" />
+            <div class="cs-hero-cap">
+              <p class="eyebrow">{html.escape(s['scope'])}</p>
+              <h1>{html.escape(s['name'])}<sup>®</sup></h1>
+              <p class="cs-hero-ind">{html.escape(s['industry'])}</p>
+              <span class="cs-hero-btn"><span>Open the brand book</span><i>↓</i></span>
+            </div>
+          </a>
+          <p class="cs-story reveal">{html.escape(s['description'])}</p>
+          <dl class="cs-facts reveal">
             <div><dt>Client</dt><dd>{html.escape(s['name'])}</dd></div>
             <div><dt>Country</dt><dd>{html.escape(s['country'])}</dd></div>
             <div><dt>Scope</dt><dd>{html.escape(s['scope'])}</dd></div>
             {site}
           </dl>
-          <div class="cs-book">
+          <div class="cs-book is-closed" id="book">
+            <div class="cs-pages">
 {chr(10).join(pages)}
+            </div>
+            <div class="cs-book-veil">
+              <button type="button" class="cs-open" id="cs-open"><span>Open the brand book</span><i>↓</i></button>
+              <p>{s['pages']} pages, page by page</p>
+            </div>
           </div>
-          <div class="cs-pager">
-            <a href="{prev['slug']}.html"><div class="lab">← Previous</div><div class="nm">{html.escape(prev['name'])}</div></a>
-            <a class="next" href="{nxt['slug']}.html"><div class="lab">Next →</div><div class="nm">{html.escape(nxt['name'])}</div></a>
-          </div>
-          <div class="lets text-center" style="margin-top: 60px;">
+{pager}
+          <div class="lets text-center reveal" style="margin-top: 60px;">
             <p style="color:#ccc; font-size:14px; margin-bottom:18px;">Your brand could be next.</p>
             <a href="contact.html" class="btn-curve btn-lit"><span>Start a project</span></a>
           </div>
         </div>
       </section>
     </div>
-    </main>"""
+    </main>
+    <script>
+    /* Brand book: closed preview, opens on click (hero or button); pages and blocks fade up as they enter the viewport. */
+    (function () {{
+      var book = document.getElementById("book"), hero = document.getElementById("cs-hero"), btn = document.getElementById("cs-open");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      function openBook(scroll) {{
+        if (!book.classList.contains("is-closed")) {{ if (scroll) go(); return; }}
+        book.classList.remove("is-closed");
+        book.querySelectorAll("figure").forEach(function (f, i) {{ if (i < 6) f.style.transitionDelay = (i * 70) + "ms"; }});
+        if (scroll) go();
+        window.setTimeout(function () {{ book.querySelectorAll("figure").forEach(function (f) {{ f.style.transitionDelay = ""; }}); }}, 1200);
+      }}
+      function go() {{ var y = book.getBoundingClientRect().top + window.pageYOffset - 24; window.scrollTo({{ top: y, behavior: reduce ? "auto" : "smooth" }}); }}
+      hero.addEventListener("click", function (e) {{ e.preventDefault(); openBook(true); }});
+      btn.addEventListener("click", function () {{ openBook(false); }});
+      if (location.hash === "#book") openBook(true);
+      /* reveal on scroll */
+      var items = document.querySelectorAll(".reveal, .cs-book figure");
+      if (reduce || !("IntersectionObserver" in window)) {{ items.forEach(function (el) {{ el.classList.add("in"); }}); return; }}
+      var io = new IntersectionObserver(function (entries) {{
+        entries.forEach(function (en) {{ if (en.isIntersecting) {{ en.target.classList.add("in"); io.unobserve(en.target); }} }});
+      }}, {{ rootMargin: "0px 0px -8% 0px", threshold: 0.05 }});
+      items.forEach(function (el) {{ io.observe(el); }});
+      /* hero: show at once */
+      window.requestAnimationFrame(function () {{ hero.classList.add("in"); }});
+    }})();
+    </script>"""
     out = page(f"{s['name']} Brand Book | G.designthings", f"{s['name']} brand identity system by G.designthings. {s['description']}", f"https://www.gdesignthings.com/case-studies/{s['slug']}.html", body, 1, "case-studies", og=s["cover"])
     # inside the case page, Previous/Next links are siblings in the same folder: undo the ../ added by fix_paths
     out = out.replace(f'href="../{prev["slug"]}.html"', f'href="{prev["slug"]}.html"').replace(f'href="../{nxt["slug"]}.html"', f'href="{nxt["slug"]}.html"')

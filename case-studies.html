@@ -106,7 +106,40 @@
       .cs-archive p.eyebrow { margin-bottom: 14px; }
       .cs-archive ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
       .cs-archive li { border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 6px 14px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #9a9a9a; }
+      /* reveal on scroll */
+      .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+      .reveal.in { opacity: 1; transform: none; }
+      @media (prefers-reduced-motion: reduce) { .reveal, .cs-book figure, .cs-hero img, .cs-hero-btn i { transition: none !important; transform: none !important; opacity: 1 !important; } }
       /* single case study */
+      .cs-page { padding-top: 110px; }
+      .cs-hero { position: relative; display: block; border-radius: 6px; overflow: hidden; background: #151921; margin: 0 0 48px; color: #fff; opacity: 0; transform: translateY(14px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1); }
+      .cs-hero.in { opacity: 1; transform: none; }
+      .cs-hero:hover, .cs-hero:focus-visible { color: #fff; text-decoration: none; outline: none; }
+      .cs-hero img { width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover; object-position: center; display: block; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+      @media (max-width: 767px) { .cs-hero img { aspect-ratio: 3 / 4; } .cs-hero::after { background: linear-gradient(to top, rgba(12,15,22,.96) 0%, rgba(12,15,22,.6) 45%, rgba(12,15,22,.05) 75%); } }
+      .cs-hero:hover img { transform: scale(1.03); }
+      .cs-hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(12,15,22,.92) 0%, rgba(12,15,22,.35) 45%, rgba(12,15,22,0) 75%); }
+      .cs-hero-cap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 36px 40px; }
+      @media (max-width: 767px) { .cs-hero-cap { padding: 22px 20px; } }
+      .cs-hero-cap p.eyebrow { margin-bottom: 8px; }
+      .cs-hero-cap h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 500; letter-spacing: -1px; line-height: 1.05; margin: 0 0 6px; color: #fff; }
+      .cs-hero-cap h1 sup { font-size: .35em; font-weight: 300; color: #BAFF29; vertical-align: top; line-height: 1; }
+      .cs-hero-ind { color: #c8c8c8; font-size: 15px; margin: 0 0 18px; }
+      .cs-hero-btn, .cs-open { display: inline-flex; align-items: center; gap: 12px; border: 1px solid #fff; border-radius: 30px; padding: 12px 26px; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; color: #fff; background: transparent; font-family: inherit; cursor: pointer; transition: background .25s ease, color .25s ease, border-color .25s ease; }
+      .cs-hero-btn i, .cs-open i { font-style: normal; transition: transform .4s ease; }
+      .cs-hero:hover .cs-hero-btn, .cs-open:hover, .cs-open:focus-visible { background: #BAFF29; border-color: #BAFF29; color: #0c0f16; outline: none; }
+      .cs-hero:hover .cs-hero-btn i, .cs-open:hover i { transform: translateY(3px); }
+      .cs-book { position: relative; scroll-margin-top: 24px; }
+      .cs-pages { display: grid; gap: 6px; }
+      .cs-book figure { margin: 0; background: #151921; border-radius: 4px; overflow: hidden; opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+      .cs-book figure.in { opacity: 1; transform: none; }
+      .cs-book.is-closed .cs-pages { max-height: 520px; overflow: hidden; }
+      @media (max-width: 767px) { .cs-book.is-closed .cs-pages { max-height: 300px; } }
+      .cs-book.is-closed figure { opacity: 1; transform: none; }
+      .cs-book-veil { position: absolute; left: 0; right: 0; bottom: 0; height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 12px; padding-bottom: 28px; background: linear-gradient(to bottom, rgba(12,15,22,0) 0%, rgba(12,15,22,.85) 55%, #0c0f16 100%); transition: opacity .5s ease; }
+      .cs-book-veil p { margin: 0; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #9a9a9a; }
+      .cs-book:not(.is-closed) .cs-book-veil { opacity: 0; pointer-events: none; }
+
       .cs-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: #9a9a9a; margin-bottom: 40px; }
       .cs-top a { color: #9a9a9a; } .cs-top a:hover { color: #BAFF29; text-decoration: none; }
       .cs-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 32px; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 24px 0; margin: 36px 0; }
@@ -115,8 +148,6 @@
       .cs-facts dd { margin: 4px 0 0; color: #fff; font-weight: 500; font-size: 15px; }
       .cs-facts dd a { color: #BAFF29; }
       .cs-story { max-width: 720px; font-size: 17px; line-height: 1.75; color: #d6d6d6; margin: 0 0 48px; }
-      .cs-book { display: grid; gap: 6px; }
-      .cs-book figure { margin: 0; background: #151921; border-radius: 4px; overflow: hidden; }
       .cs-book img { width: 100%; height: auto; display: block; }
       .cs-pager { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 36px; margin-top: 56px; }
       .cs-pager a { display: block; color: #fff; } .cs-pager a:hover { text-decoration: none; }
@@ -187,13 +218,13 @@
       <section class="section-padding">
         <div class="container">
           <div class="cs-grid">
-            <a class="cs-card is-wide" href="case-studies/spaces.html">
+            <a class="cs-card reveal is-wide" href="case-studies/spaces.html" style="transition-delay: 0ms">
               <div class="cs-cover"><img src="img/case-studies/spaces/cover.webp" alt="SPACES brand book" loading="eager" width="1200" height="900" /></div>
               <span class="cs-tag">Brand Identity System</span>
               <div class="cs-meta"><div><h3>SPACES<sup>®</sup></h3><p>Energy / Logistics / Property</p></div><span class="arrow">→</span></div>
             </a>
           </div>
-          <div class="cs-archive">
+          <div class="cs-archive reveal">
             <p class="eyebrow">More brand systems</p>
             <ul><li>BOX caffee</li><li>QFL</li><li>Microapp.io</li><li>Pickle &amp; Pin</li><li>Farfalla</li><li>UK smiles</li><li>DETOUR</li><li>Shepherd &amp; Grace</li><li>Soul Search</li><li>Aoodor</li><li>GLOBESTAR Express</li><li>iPetStar</li><li>W’Ink</li><li>Cortado</li><li>Kave Sales</li><li>Saliencia</li><li>Recrewer</li><li>Aliyz</li><li>m/eleven</li><li>Winged Pony</li></ul>
           </div>
@@ -204,6 +235,17 @@
       </section>
     </div>
     </main>
+    <script>
+    (function () {
+      var items = document.querySelectorAll(".reveal");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduce || !("IntersectionObserver" in window)) { items.forEach(function (el) { el.classList.add("in"); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.05 });
+      items.forEach(function (el) { io.observe(el); });
+    })();
+    </script>
 
     <footer class="site-footer">
     <div class="container">
