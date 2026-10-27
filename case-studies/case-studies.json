@@ -1,0 +1,25 @@
+{
+  "intro": "Selected brand books. Every one starts with a brief, moves through pencil sketches, and ends as a system the client can use for years.",
+  "studies": [
+    {
+      "slug": "spaces",
+      "name": "SPACES",
+      "industry": "Energy / Logistics / Property",
+      "country": "South Africa",
+      "year": "2026",
+      "scope": "Brand Identity System",
+      "description": "A bold and modular brand identity for a multi-sector company operating across fuel distribution, logistics, and property development. The visual system balances structure with movement, built for long-term scalability across industries.",
+      "cover": "img/case-studies/spaces/cover.webp",
+      "pages_dir": "img/case-studies/spaces",
+      "pages_prefix": "spaces-",
+      "pages": 41,
+      "page_width": 1600,
+      "page_height": 900
+    }
+  ],
+  "archive": [
+    "BOX caffee", "QFL", "Microapp.io", "Pickle & Pin", "Farfalla", "UK smiles", "DETOUR", "Shepherd & Grace",
+    "Soul Search", "Aoodor", "GLOBESTAR Express", "iPetStar", "W’Ink", "Cortado", "Kave Sales", "Saliencia",
+    "Recrewer", "Aliyz", "m/eleven", "Winged Pony"
+  ]
+}
