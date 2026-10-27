@@ -295,6 +295,18 @@
         var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty; tx = ty = null;
         if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(dx < 0 ? cur + 1 : cur - 1);
       });
+      /* mouse wheel / trackpad flips pages (when not zoomed); one page per gesture */
+      var wheelLock = 0, wheelAcc = 0;
+      lb.addEventListener("wheel", function (e) {
+        if (zoomed) return;
+        e.preventDefault();
+        var now = Date.now(); if (now < wheelLock) return;
+        var d = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+        wheelAcc += d;
+        if (Math.abs(wheelAcc) < 40) return;
+        show(wheelAcc > 0 ? cur + 1 : cur - 1);
+        wheelAcc = 0; wheelLock = now + 450;
+      }, { passive: false });
       if (location.hash === "#book") openViewer(0);
       /* reveal on scroll */
       var items = document.querySelectorAll(".reveal");
