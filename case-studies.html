@@ -119,18 +119,22 @@
       .cs-hero img { width: 100%; height: auto; aspect-ratio: 21 / 9; object-fit: cover; object-position: center; display: block; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
       .cs-hero.is-tall img, .cs-cover.is-tall img { object-position: center top; }
       .cs-book.is-single .cs-pages { max-width: 760px; margin: 0 auto; }
-      .cs-zoom { display: block; width: 100%; padding: 0; border: 0; background: transparent; cursor: zoom-in; font: inherit; }
-      .cs-zoom:focus-visible { outline: 2px solid #BAFF29; outline-offset: -2px; }
-      .cs-lightbox { position: fixed; inset: 0; z-index: 9999; background: rgba(8,10,14,.96); display: flex; align-items: center; justify-content: center; padding: 56px 64px; cursor: zoom-out; }
+      .cs-lightbox { position: fixed; inset: 0; z-index: 9999; background: #0c0f16; display: flex; flex-direction: column; }
       .cs-lightbox[hidden] { display: none; }
-      .cs-lightbox img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 4px; cursor: default; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
-      .cs-lightbox button { position: absolute; border: 1px solid rgba(255,255,255,.2); background: rgba(12,15,22,.7); color: #fff; width: 44px; height: 44px; border-radius: 50%; font-size: 26px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: border-color .2s, color .2s; font-family: inherit; }
+      .cs-lb-top { display: flex; align-items: center; gap: 14px; padding: 14px 18px; flex: none; }
+      .cs-lb-title { font-weight: 500; color: #fff; font-size: 15px; }
+      .cs-lb-title sup { font-size: .55em; font-weight: 300; color: #BAFF29; }
+      .cs-lb-count { margin-left: auto; font-size: 12px; letter-spacing: 2px; color: #9a9a9a; font-variant-numeric: tabular-nums; }
+      .cs-lb-stage { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 8px 72px 8px; overflow: auto; cursor: zoom-out; }
+      .cs-lb-stage img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 4px; cursor: zoom-in; box-shadow: 0 20px 60px rgba(0,0,0,.5); display: block; transition: none; }
+      .cs-lightbox.is-zoomed .cs-lb-stage { display: block; cursor: default; }
+      .cs-lightbox.is-zoomed .cs-lb-stage img { max-width: none; max-height: none; width: 160%; margin: 0 auto; cursor: zoom-out; }
+      .cs-lightbox button { border: 1px solid rgba(255,255,255,.2); background: rgba(12,15,22,.7); color: #fff; width: 44px; height: 44px; border-radius: 50%; font-size: 26px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: border-color .2s, color .2s; font-family: inherit; flex: none; padding: 0; }
       .cs-lightbox button:hover, .cs-lightbox button:focus-visible { border-color: #BAFF29; color: #BAFF29; outline: none; }
-      .cs-lb-close { top: 16px; right: 16px; }
-      .cs-lb-prev { left: 12px; top: 50%; transform: translateY(-50%); }
-      .cs-lb-next { right: 12px; top: 50%; transform: translateY(-50%); }
-      .cs-lb-count { position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; margin: 0; font-size: 12px; letter-spacing: 2px; color: #9a9a9a; }
-      @media (max-width: 767px) { .cs-lightbox { padding: 60px 8px; } .cs-lb-prev, .cs-lb-next { display: none; } }
+      .cs-lightbox .cs-lb-prev, .cs-lightbox .cs-lb-next { position: absolute; top: 50%; transform: translateY(-50%); }
+      .cs-lightbox .cs-lb-prev { left: 14px; } .cs-lightbox .cs-lb-next { right: 14px; }
+      .cs-lb-hint { flex: none; margin: 0; padding: 10px 16px 14px; text-align: center; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #6f6f6f; }
+      @media (max-width: 767px) { .cs-lb-stage { padding: 6px 8px; } .cs-lightbox .cs-lb-prev, .cs-lightbox .cs-lb-next { display: none; } .cs-lb-hint { font-size: 10px; letter-spacing: 1.5px; } .cs-lightbox.is-zoomed .cs-lb-stage img { width: 220%; } }
       body.cs-lb-open { overflow: hidden; }
       @media (max-width: 767px) { .cs-hero img { aspect-ratio: 3 / 4; } .cs-hero::after { background: linear-gradient(to top, rgba(12,15,22,.96) 0%, rgba(12,15,22,.6) 45%, rgba(12,15,22,.05) 75%); } }
       .cs-hero:hover img { transform: scale(1.03); }
@@ -145,26 +149,14 @@
       .cs-hero-btn i, .cs-open i { font-style: normal; transition: transform .4s ease; }
       .cs-hero:hover .cs-hero-btn, .cs-open:hover, .cs-open:focus-visible { background: #BAFF29; border-color: #BAFF29; color: #0c0f16; outline: none; }
       .cs-hero:hover .cs-hero-btn i, .cs-open:hover i { transform: translateY(3px); }
-      .cs-book { position: relative; scroll-margin-top: 24px; }
-      .cs-pages { display: grid; gap: 6px; }
-      .cs-book figure { margin: 0; background: #151921; border-radius: 4px; overflow: hidden; opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
-      .cs-book figure.in { opacity: 1; transform: none; }
-      .cs-book.is-closed .cs-pages { max-height: 520px; overflow: hidden; }
-      @media (max-width: 767px) { .cs-book.is-closed .cs-pages { max-height: 300px; } }
-      .cs-book.is-closed figure { opacity: 1; transform: none; }
-      .cs-book-veil { position: absolute; left: 0; right: 0; bottom: 0; height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 12px; padding-bottom: 28px; background: linear-gradient(to bottom, rgba(12,15,22,0) 0%, rgba(12,15,22,.85) 55%, #0c0f16 100%); transition: opacity .5s ease; }
-      .cs-book-veil p { margin: 0; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: #9a9a9a; }
-      .cs-book:not(.is-closed) .cs-book-veil { opacity: 0; pointer-events: none; }
-
-      .cs-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: #9a9a9a; margin-bottom: 40px; }
-      .cs-top a { color: #9a9a9a; } .cs-top a:hover { color: #BAFF29; text-decoration: none; }
       .cs-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px 32px; border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 24px 0; margin: 36px 0; }
       @media (max-width: 767px) { .cs-facts { grid-template-columns: 1fr 1fr; } }
       .cs-facts dt { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #9a9a9a; font-weight: 400; }
       .cs-facts dd { margin: 4px 0 0; color: #fff; font-weight: 500; font-size: 15px; }
       .cs-facts dd a { color: #BAFF29; }
       .cs-story { max-width: 720px; font-size: 17px; line-height: 1.75; color: #d6d6d6; margin: 0 0 48px; }
-      .cs-book img { width: 100%; height: auto; display: block; }
+      .cs-open-row { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin: 0 0 8px; }
+      .cs-open-row p { margin: 0; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #9a9a9a; }
       .cs-pager { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 36px; margin-top: 56px; }
       .cs-pager a { display: block; color: #fff; } .cs-pager a:hover { text-decoration: none; }
       .cs-pager .lab { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #9a9a9a; }
