@@ -168,36 +168,50 @@
   })();
 
   /* =========================================================================
-     2. PORTFOLIO COVERFLOW
+     2. COVERFLOWS (portfolio logos + brand systems)
      ========================================================================= */
-  function coverflow() {
-    var section = d.querySelector(".portfolio");
-    var stage = d.getElementById("gallery-3d");
-    var dotsEl = d.querySelector(".gallery-3d-dots");
-    if (!section || !stage) return;
+  function makeMask(aspect) {
+    var cw = 512, chh = Math.round(512 / aspect), rad = 26 / aspect >= 26 ? 26 : Math.round(26 * Math.min(1, 1 / aspect) + 10);
+    rad = aspect > 1 ? 18 : 26;
+    var c = d.createElement("canvas"); c.width = cw; c.height = chh;
+    var g = c.getContext("2d");
+    g.fillStyle = "#000"; g.fillRect(0, 0, cw, chh);
+    g.fillStyle = "#fff"; g.beginPath();
+    g.moveTo(rad, 0); g.lineTo(cw - rad, 0); g.quadraticCurveTo(cw, 0, cw, rad);
+    g.lineTo(cw, chh - rad); g.quadraticCurveTo(cw, chh, cw - rad, chh);
+    g.lineTo(rad, chh); g.quadraticCurveTo(0, chh, 0, chh - rad);
+    g.lineTo(0, rad); g.quadraticCurveTo(0, 0, rad, 0); g.closePath(); g.fill();
+    return new THREE.CanvasTexture(c);
+  }
+
+  function buildFlow(cfg) {
+    var section = cfg.section, stage = cfg.stage, dotsEl = cfg.dotsEl, items = cfg.items;
+    if (!section || !stage || !items.length) return false;
 
     var canvas = d.createElement("canvas");
     canvas.setAttribute("aria-hidden", "true");
     stage.appendChild(canvas);
     var renderer = makeRenderer(canvas);
-    if (!renderer) { canvas.remove(); return; }
-    section.classList.add("is-3d");
+    if (!renderer) { canvas.remove(); return false; }
+    if (cfg.readyClass) section.classList.add(cfg.readyClass);
 
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
     var loader = new THREE.TextureLoader();
 
-    var SP = 4.0;                 /* spacing between cards, world units */
-    var cards = works.map(function (wk, i) {
-      var mat = new THREE.MeshBasicMaterial({ map: loadTexture(loader, isMobile ? wk.small : wk.large), alphaMap: maskTex, transparent: true, opacity: 1 });
-      var m = new THREE.Mesh(new THREE.PlaneGeometry(3.6, 3.6), mat);
-      m.userData = { i: i, cat: wk.cat, alt: wk.alt, on: true, s: 1 };
+    var SP = cfg.sp;                 /* spacing between cards, world units */
+    var mask = cfg.mask || maskTex;
+    var cards = items.map(function (wk, i) {
+      var mat = new THREE.MeshBasicMaterial({ map: loadTexture(loader, isMobile ? wk.small : wk.large), alphaMap: mask, transparent: true, opacity: 1 });
+      var m = new THREE.Mesh(new THREE.PlaneGeometry(cfg.planeW, cfg.planeH), mat);
+      m.userData = { i: i, cat: wk.cat, alt: wk.alt, url: wk.url, on: true, s: 1 };
       scene.add(m);
       return m;
     });
 
     var order = cards.slice();   /* cards currently shown, in layout order */
     var start = Math.floor((cards.length - 1) / 2);
+    if (cfg.startAt != null) start = cfg.startAt;
     var dir = 1, idleAt = Date.now() + 5000, hover = false;   /* slow self-browsing while nobody touches it */
     var startOffset = start;
     var offset = start, target = start, drag = false, moved = 0, lastX = 0, vel = 0, pxPerUnit = 200, running = true;
@@ -205,8 +219,7 @@
     function fit() {
       var wdt = stage.clientWidth, hgt = stage.clientHeight;
       camera.aspect = wdt / hgt;
-      /* far enough that one card plus two neighbours fit on desktop, about 1.4 cards on a phone */
-      camera.position.set(0, 0, isMobile ? 9.4 : 11);
+      camera.position.set(0, 0, isMobile ? cfg.camZMobile : cfg.camZ);
       camera.lookAt(0, 0, 0);
       camera.updateProjectionMatrix();
       renderer.setSize(wdt, hgt, false);
@@ -234,7 +247,7 @@
       for (var i = 0; i < ds.length; i++) ds[i].classList.toggle("active", i === k);
     }
 
-    /* ---------- filters: reuse the existing All / Monochrome / Colorful buttons ---------- */
+    /* ---------- filters (logos only): reuse the existing filter buttons ---------- */
     function applyFilter(val) {
       var cat = val === "*" ? null : val.replace(".", "");
       order = cards.filter(function (c) {
@@ -244,13 +257,15 @@
       target = Math.min(Math.round(target), Math.max(order.length - 1, 0));
       renderDots();
     }
-    d.querySelectorAll(".portfolio .filtering span").forEach(function (sp) {
-      sp.addEventListener("click", function () {
-        applyFilter(sp.getAttribute("data-filter") || "*");
-        sp.classList.add("active");
-        Array.prototype.forEach.call(sp.parentNode.children, function (s) { if (s !== sp) s.classList.remove("active"); });
+    if (cfg.filterButtons) {
+      cfg.filterButtons.forEach(function (sp) {
+        sp.addEventListener("click", function () {
+          applyFilter(sp.getAttribute("data-filter") || "*");
+          sp.classList.add("active");
+          Array.prototype.forEach.call(sp.parentNode.children, function (s) { if (s !== sp) s.classList.remove("active"); });
+        });
       });
-    });
+    }
     renderDots();
 
     /* ---------- input ---------- */
@@ -272,10 +287,16 @@
       if (!drag) return;
       drag = false;
       if (moved < 6) {
-        /* a tap: jump to the card under the pointer */
+        /* a tap: open the centred card, or bring the tapped one to the centre */
         var rect = stage.getBoundingClientRect();
         var u = ((e.clientX - rect.left) - rect.width / 2) / pxPerUnit / SP;
-        target = Math.round(offset + u);
+        var idx = Math.round(offset + u);
+        idx = Math.max(0, Math.min(order.length - 1, idx));
+        if (cfg.tapOpens && idx === Math.round(offset) && order[idx] && order[idx].userData.url) {
+          w.location.href = order[idx].userData.url;
+          return;
+        }
+        target = idx;
       } else if (e.pointerType === "touch") {
         /* phone: one swipe moves one card in the swipe direction */
         target = Math.round(startOffset) + (offset > startOffset ? 1 : -1);
@@ -290,6 +311,10 @@
       touched();
       if (e.key === "ArrowRight") { target = Math.min(order.length - 1, Math.round(target) + 1); e.preventDefault(); }
       if (e.key === "ArrowLeft") { target = Math.max(0, Math.round(target) - 1); e.preventDefault(); }
+      if (cfg.tapOpens && (e.key === "Enter" || e.key === " ")) {
+        var c = order[Math.round(target)];
+        if (c && c.userData.url) { e.preventDefault(); w.location.href = c.userData.url; }
+      }
     });
     stage.addEventListener("wheel", function (e) {
       /* horizontal wheel or trackpad swipe browses, vertical wheel keeps scrolling the page */
@@ -341,7 +366,56 @@
     }
     frame();
     watch(stage, function (on) { if (on && !running) { running = true; frame(); } else if (!on) { running = false; } });
+    return true;
   }
+
+  function coverflow() {
+    var section = d.querySelector(".portfolio");
+    buildFlow({
+      section: section,
+      stage: d.getElementById("gallery-3d"),
+      dotsEl: d.querySelector(".gallery-3d-wrap .gallery-3d-dots"),
+      items: works,
+      planeW: 3.6, planeH: 3.6, sp: 4.0,
+      camZ: 11, camZMobile: 9.4,
+      readyClass: "is-3d",
+      filterButtons: section ? section.querySelectorAll(".filtering span[data-tab=\"logos\"]") : null,
+      tapOpens: false
+    });
+  }
+
+  /* Brand Systems tab: the brand book covers in the same draggable coverflow.
+     Built on the first visit to the tab, from the cards already in the grid. */
+  var systemsBuilt = false;
+  function systemsFlow() {
+    if (systemsBuilt) return;
+    var section = d.querySelector(".portfolio");
+    var stage = d.getElementById("systems-3d");
+    var grid = d.getElementById("brand-systems");
+    if (!section || !stage || !grid) return;
+    var items = [];
+    grid.querySelectorAll(".cs-card").forEach(function (a) {
+      var img = a.querySelector("img");
+      if (!img) return;
+      var flow = img.getAttribute("data-flow") || img.getAttribute("src");
+      items.push({ large: flow, small: flow, alt: img.getAttribute("alt") || "", url: a.getAttribute("href"), cat: "sys" });
+    });
+    systemsBuilt = buildFlow({
+      section: section,
+      stage: stage,
+      dotsEl: d.querySelector("#systems-3d-wrap .gallery-3d-dots"),
+      items: items,
+      planeW: 4.8, planeH: 2.7, sp: 5.2,
+      camZ: 12, camZMobile: 10.4,
+      readyClass: "is-3d-sys",
+      mask: makeMask(16 / 9),
+      startAt: 0,
+      tapOpens: true
+    });
+  }
+  d.querySelectorAll(".portfolio .filtering span[data-tab=\"systems\"]").forEach(function (sp) {
+    sp.addEventListener("click", function () { systemsFlow(); });
+  });
 
   /* The coverflow is built only when the portfolio section gets close to the viewport,
      so the hero never pays for it and the main thread stays free right after load. */
@@ -349,7 +423,7 @@
     var section = d.querySelector(".portfolio");
     if (!section) return;
     var started = false;
-    function start() { if (started) return; started = true; w.requestAnimationFrame(function () { coverflow(); }); }
+    function start() { if (started) return; started = true; w.requestAnimationFrame(function () { coverflow(); if (section.classList.contains("show-systems")) systemsFlow(); }); }
     if ("IntersectionObserver" in w) {
       var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); start(); } }, { rootMargin: "900px 0px" });
       io.observe(section);
