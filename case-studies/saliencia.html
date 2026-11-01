@@ -15,7 +15,7 @@
 
     <!-- Google Tag Manager -->
     <script>
-    /* GTM loads on first interaction, or 7s after page load if the visitor does nothing, so tracking never delays the first paint. */
+    /* GTM (Meta Pixel + GA4) loads on first interaction, or 1s after page load, so quick visitors are counted and tracking never delays the first paint. */
     (function (w, d, l, i) {
       w[l] = w[l] || [];
       var done = false;
@@ -29,7 +29,7 @@
       }
       ["scroll","touchstart","mousemove","keydown","click"].forEach(function (e) { w.addEventListener(e, load, { passive: true, once: true }); });
       function later(ms) { if (d.readyState === "complete") w.setTimeout(load, ms); else w.addEventListener("load", function () { w.setTimeout(load, ms); }); }
-      later(7000);
+      later(1000);
     })(window, document, "dataLayer", "GTM-KMDWJNP");
   </script>
 
